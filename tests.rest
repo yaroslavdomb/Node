@@ -1,0 +1,9 @@
+### test simple GET
+GET http://localhost:8050
+
+
+### test simple GET
+GET http://localhost:8050/api/users/all
+
+### test simple GET
+GET http://localhost:8050/api/users/first

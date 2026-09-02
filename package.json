@@ -1,0 +1,33 @@
+{
+  "name": "Node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "nodemon .",
+    "dev": "node --watch src/index.js",
+    "prod": "pm2 start src/index.js --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.25.0",
+      "onFail": "download"
+    }
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14",
+    "pm2": "^7.0.4"
+  },
+  "optionalDependencies": {
+    "chalk": "^6.0.0"
+  },
+  "packageManager": "pnpm@11.25.0",
+  "type": "commonjs"  
+}
