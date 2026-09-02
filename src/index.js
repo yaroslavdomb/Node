@@ -1,8 +1,9 @@
-const express = require("express");
-const path = require("path");
-const usersRouter = require("./routers/users.js");
-const logger = require("./middleware/logger.js");
-const notFound = require("./middleware/notFound.js");
+import express from "express";
+import path from "node:path";
+import usersRouter from "./routers/users.js";
+import loggerChalk from "./middleware/logger-chalk.js";
+import loggerPC from "./middleware/logger-pc.js";
+import notFound from "./middleware/notFound.js";
 
 const app = express();
 
@@ -10,7 +11,7 @@ console.log("Start application on 8050");
 
 //Initial configurations for server
 app.use(express.json());
-app.use(logger);
+app.use(loggerPC);
 
 //Paths for routers
 app.use("/static", express.static(path.resolve("public")));
