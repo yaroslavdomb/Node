@@ -1,7 +1,7 @@
 import chalk from "chalk";
-import { type Request, type Response, type NextFunction } from "express";
+import { RequestHandler } from "express";
 
-const logger = (req: Request, res: Response, next: NextFunction) => {
+const logger: RequestHandler = (req, res, next) => {
   console.log(chalk.blue(req.method, req.url));
   next();
 };
