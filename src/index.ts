@@ -1,9 +1,9 @@
 import express from "express";
 import path from "node:path";
-import usersRouter from "./routers/users.js";
-import loggerChalk from "./middleware/logger-chalk.js";
-import loggerPC from "./middleware/logger-pc.js";
-import notFound from "./middleware/notFound.js";
+import usersRouter from "./routers/users.ts";
+import loggerChalk from "./middleware/logger-chalk.ts";
+import loggerPC from "./middleware/logger-pc.ts";
+import notFound from "./middleware/notFound.ts";
 
 const app = express();
 
