@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "test": "nodemon .",
+    "test": "nodemon --exec tsx src/index.ts",
     "dev": "node --watch src/index.ts",
     "prod": "pm2 start src/index.ts --watch"
   },
@@ -19,14 +19,18 @@
     }
   },
   "dependencies": {
+    "@dotenvx/dotenvx": "^2.23.0",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "mysql2": "^3.24.2"
+    "mysql2": "^3.24.2",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/node": "^26.4.0",
     "nodemon": "^3.1.14",
     "pm2": "^7.0.4",
+    "tsx": "^4.23.13",
     "typescript": "^7.0.2"
   },
   "optionalDependencies": {
