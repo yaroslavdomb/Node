@@ -1,6 +1,6 @@
-import validatedEnv from "../config/env.config.ts";
+import validatedEnv from "../config/env.config";
 import mongoose from "mongoose";
-import initDB from "./initializing.ts";
+import initDB from "./initializing";
 
 const connect = async (connStr: string = validatedEnv.DB_CONNECTION_STR) => {
   try {

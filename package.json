@@ -4,8 +4,11 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "test": "nodemon --exec tsx src/index.ts",
-    "dev": "dotenvx run -f src/config/.env.dev -- node --watch src/index.ts",
+    "build": "tsc",
+    "tests_view": "vitest run --reporter=verbose",
+    "tests_watch": "vitest",
+    "dev_nodemon": "nodemon --exec tsx src/index.ts",
+    "dev_watch": "dotenvx run -f src/config/.env.dev -- tsx watch src/index.ts",
     "prod": "dotenvx run -f src/config/.env.prod -- pm2 start src/index.ts --time --watch"
   },
   "keywords": [],
@@ -30,14 +33,13 @@
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/node": "^26.4.0",
+    "chalk": "^6.0.0",
     "nodemon": "^3.1.14",
+    "picocolors": "^1.1.1",
     "pm2": "^7.0.4",
     "tsx": "^4.23.13",
-    "typescript": "^7.0.2"
-  },
-  "optionalDependencies": {
-    "chalk": "^6.0.0",
-    "picocolors": "^1.1.1"
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.0"
   },
   "packageManager": "pnpm@11.25.0",
   "type": "module"

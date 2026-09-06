@@ -1,12 +1,12 @@
-import validatedEnv from "./config/env.config.ts";
+import validatedEnv from "./config/env.config";
 import express from "express";
 import path from "node:path";
-import usersRouter from "./routers/users.ts";
-import cardsRouter from "./routers/cards.ts";
-import loggerChalk from "./middleware/logger-chalk.ts";
-import loggerPC from "./middleware/logger-pc.ts";
-import notFound from "./middleware/notFound.ts";
-import dbConnection from "./db/connection.ts"
+import usersRouter from "./routers/users";
+import cardsRouter from "./routers/cards";
+import loggerChalk from "./middleware/logger-chalk";
+import loggerPC from "./middleware/logger-pc";
+import notFound from "./middleware/notFound";
+import dbConnection from "./db/connection";
 
 dbConnection();
 

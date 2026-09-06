@@ -1,4 +1,4 @@
-import validatedEnv from "../config/env.config.ts";
+import validatedEnv from "../config/env.config";
 import { MongoClient } from "mongodb";
 
 const initDB = async () => {
