@@ -6,6 +6,9 @@ import cardsRouter from "./routers/cards.ts";
 import loggerChalk from "./middleware/logger-chalk.ts";
 import loggerPC from "./middleware/logger-pc.ts";
 import notFound from "./middleware/notFound.ts";
+import dbConnection from "./db/connection.ts"
+
+dbConnection();
 
 const app = express();
 
@@ -23,7 +26,7 @@ app.use("/api/cards", cardsRouter);
 //Final onfiguration for server
 app.use(notFound);
 
-const { PORT_NUM, SCHEMA, SERVER } = validatedEnv;
-app.listen(PORT_NUM, () => {
-  console.warn(`Server started on ${SCHEMA}://${SERVER}:${PORT_NUM}`);
+const { SERVER_PORT, SCHEMA, SERVER } = validatedEnv;
+app.listen(SERVER_PORT, () => {
+  console.warn(`Server started on ${SCHEMA}://${SERVER}:${SERVER_PORT}`);
 });
