@@ -1,17 +1,24 @@
-import { z } from "zod";
-import { address } from "./address";
-import { name } from "./name";
-import { PASS_REGEXP, ISRAEL_PHONE_REGEXP } from "./patterns";
-import { image } from "./image";
+import { Schema, Types } from "mongoose";
+import { addressDBSchema } from "./address";
+import { nameDBSchema } from "./name";
+import { imageDBSchema } from "./image";
+import { User } from "../../validators/user";
 
-export const user = z.object({
-  address: address,
-  email: z.email().min(5).max(256),
-  name: name,
-  password: z.string().min(3).max(30).regex(PASS_REGEXP),
-  phone: z.string().min(3).max(15).regex(ISRAEL_PHONE_REGEXP),
-  image: image,
-  isBusiness: z.coerce.boolean()
+export type userDB = User & {
+  createdAt: Date;
+  isAdmin: boolean;
+  _id: Types.ObjectId;
+};
+
+export const userDBSchema = new Schema<userDB>({
+  address: { type: addressDBSchema, required: true },
+  name: { type: nameDBSchema, required: true },
+  image: { type: imageDBSchema, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true, select: false, minlength: 8, maxlength: 100 },
+  phone: { type: String, required: true },
+  isBusiness: { type: Boolean, required: false },
+  isAdmin: { type: Boolean, required: true },
+  createdAt: { type: Date, required: true, default: Date.now },
+  _id: {}
 });
-
-export type User = z.infer<typeof user>;

@@ -1,8 +1,15 @@
-import { z } from "zod";
+import { Schema } from "mongoose";
+import { Image } from "../../validators/image";
 
-export const image = z.object({
-  alt: z.string().max(256).nullish().or(z.literal("")),
-  url: z.url().min(2).max(256)
+export const imageDBSchema = new Schema<Image>({
+  url: {
+    type: String,
+    required: true,
+    maxLength: 256
+  },
+  alt: {
+    type: String,
+    required: true,
+    maxLength: 256
+  }
 });
-
-export type Image = z.infer<typeof image>;

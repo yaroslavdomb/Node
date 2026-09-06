@@ -1,13 +1,46 @@
-import { z } from "zod";
+import { Schema } from "mongoose";
+import { Address } from "../../validators/address";
 
-export const address = z.object({
-  city: z.string().min(2).max(25),
-  country: z.string().min(2).max(25),
-  countryCode: z.string().min(2).max(3),
-  houseNumber: z.coerce.number().min(0).max(99999),
-  street: z.string().min(2).max(150),
-  zipCode: z.coerce.number().min(1).max(99999),
-  state: z.string().nullish().or(z.literal(""))
+export const addressDBSchema = new Schema<Address>({
+  city: {
+    type: String,
+    required: true,
+    minlength: 2,
+    maxlength: 25
+  },
+  country: {
+    type: String,
+    required: true,
+    minlength: 2,
+    maxlength: 25
+  },
+  countryCode: {
+    type: String,
+    required: true,
+    minlength: 2,
+    maxlength: 3
+  },
+  houseNumber: {
+    type: Number,
+    required: true,
+    minlength: 1,
+    maxlength: 99999
+  },
+  street: {
+    type: String,
+    required: true,
+    minlength: 1,
+    maxlength: 150
+  },
+  zipCode: {
+    type: Number,
+    required: true,
+    minlength: 1,
+    maxlength: 99999
+  },
+  state: {
+    type: String,
+    required: true,
+    default: ""
+  }
 });
-
-export type Address = z.infer<typeof address>;
