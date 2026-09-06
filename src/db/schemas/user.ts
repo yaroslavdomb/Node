@@ -19,6 +19,5 @@ export const userDBSchema = new Schema<userDB>({
   phone: { type: String, required: true },
   isBusiness: { type: Boolean, required: false },
   isAdmin: { type: Boolean, required: true },
-  createdAt: { type: Date, required: true, default: Date.now },
-  _id: {}
+  createdAt: { type: Date, required: true, default: Date.now }
 });

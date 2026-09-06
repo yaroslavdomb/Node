@@ -20,8 +20,8 @@ app.use(loggerPC);
 
 //Paths for routers
 app.use("/static", express.static(path.resolve("public")));
-app.use("/api/users", usersRouter);
-app.use("/api/cards", cardsRouter);
+app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/cards", cardsRouter);
 
 //Final onfiguration for server
 app.use(notFound);

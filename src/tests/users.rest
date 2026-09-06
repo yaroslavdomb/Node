@@ -1,0 +1,29 @@
+### POST create user
+POST http://localhost:8050/api/v1/users
+Content-Type: application/json
+
+{
+  "name": {
+    "_id": "65f1a2b3c4d5e6f7a8b9c0d3",
+    "firstName": "Qwwert",
+    "lastName": "ASD"
+  },
+  "address": {
+    "street": "Stroitelej",
+    "city": "Tel-Avi",
+    "country": "ISrael",
+    "countryCode": "ISL",
+    "state": "center",
+    "houseNumber": 3,
+    "zipCode": 12345
+  },
+  "image": {
+    "alt": "user-profile",
+    "url": "https://picsum.photos/200/300"
+  },
+  "phone": "0524720544",
+  "email": "e2@e.com",
+  "isBusiness": true,
+  "isAdmin": false,
+  "password": "123456aA!"
+}
