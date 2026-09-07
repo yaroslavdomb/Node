@@ -7,6 +7,7 @@ import loggerChalk from "./middleware/logger-chalk";
 import loggerPC from "./middleware/logger-pc";
 import notFound from "./middleware/notFound";
 import dbConnection from "./db/connection";
+import errorHandler from "./middleware/error-handler";
 
 dbConnection();
 
@@ -25,6 +26,7 @@ app.use("/api/v1/cards", cardsRouter);
 
 //Final onfiguration for server
 app.use(notFound);
+app.use(errorHandler);
 
 const { SERVER_PORT, SCHEMA, SERVER } = validatedEnv;
 app.listen(SERVER_PORT, () => {
