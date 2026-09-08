@@ -10,7 +10,8 @@ const envSchema = z.object({
   ENV: z.enum(["prod", "test", "dev"]).default("dev"),
   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace", "silent"]).default("info"),
   SCHEMA: z.enum(["http", "https", "ftp"]).default("http"),
-  DB_TEST_ENABLED: z.coerce.boolean().default(false)
+  DB_TEST_ENABLED: z.coerce.boolean().default(false),
+  JWT_SECRET: z.string().min(32, "JWT is mandatory")
 });
 
 const result = envSchema.safeParse(process.env);

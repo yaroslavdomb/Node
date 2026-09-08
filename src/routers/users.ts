@@ -3,23 +3,39 @@ import UserDb from "../db/models/user";
 import { user } from "../validators/user";
 import bcrypt from "bcrypt";
 import { login } from "../validators/login";
+import { SignJWT, JWTPayload } from "jose";
+import validatedEnv from "../config/env.config";
 
 const usersRouter = Router();
 
 //login
 usersRouter.post("/login", async (req, res) => {
   const { email, password } = await login.parseAsync(req.body);
-  const detectedUser = await UserDb.findOne({ email }).select("password:1 _id:0");
+  const detectedUser = await UserDb.findOne({ email }).select({ password: 1, _id: 1, email: 1, isAdmin: 1 });
   if (!detectedUser) {
     return res.status(400).json(`User with ${email} not found in DB`);
   }
 
   const isPassValid = await bcrypt.compare(password, detectedUser.password);
   if (!isPassValid) {
+    console.error(`Password = ${password}`);
+    const hash = await bcrypt.hash(password, 12);
+    console.error(`Hashed = ${hash}`);
+    console.error(`In user: ${detectedUser.password}`);
+
     return res.status(401).json("You've been not authenticated!");
   }
 
-  res.json({ msg: "Logged in successfully" });
+  //TODO: Returm JWT token
+  const secret = new TextEncoder().encode(validatedEnv.JWT_SECRET);
+  const token = await new SignJWT({ email: detectedUser.email, admin: detectedUser.isAdmin })
+    .setProtectedHeader({ alg: "HS256", typ: "at+JWT" })
+    .setSubject(detectedUser._id.toString())
+    .setExpirationTime("15min")
+    .setIssuedAt()
+    .sign(secret);
+
+  res.json({ msg: "Logged in successfully!", token: `${token}` });
 });
 
 usersRouter.post("/", async (req, res) => {
@@ -93,7 +109,7 @@ usersRouter.get("/allIds2", async (req, res) => {
 
 // Immediatly return array of all Ids, but it slower then select
 usersRouter.get("/allIds3", async (req, res) => {
-  const users = await UserDb.find().distinct("_id");
+  const users = await UserDb.distinct("_id");
   res.json({ msg: users });
 });
 
