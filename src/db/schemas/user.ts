@@ -1,4 +1,4 @@
-import { Schema, Types } from "mongoose";
+import { Schema, Types, Document, Model } from "mongoose";
 import { addressDBSchema } from "./address";
 import { nameDBSchema } from "./name";
 import { imageDBSchema } from "./image";
@@ -10,7 +10,17 @@ export type userDB = User & {
   _id: Types.ObjectId;
 };
 
-export const userDBSchema = new Schema<userDB>({
+//actions per document
+export interface IUserDoc extends userDB, Document {
+  setPassword(password: string): Promise<void>;
+}
+
+//actions per collection
+export interface IUserModel extends Model<IUserDoc> {
+  findByEmail(email: string): Promise<IUserDoc | null>;
+}
+
+export const userDBSchema = new Schema<IUserDoc, IUserModel>({
   address: { type: addressDBSchema, required: true },
   name: { type: nameDBSchema, required: true },
   image: { type: imageDBSchema, required: true },

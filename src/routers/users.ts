@@ -1,54 +1,23 @@
-import { type Request, type Response, Router } from "express";
+import { Router } from "express";
 import UserDb from "../db/models/user";
 import { user } from "../validators/user";
 import bcrypt from "bcrypt";
 import { login } from "../validators/login";
-import { SignJWT, JWTPayload } from "jose";
-import validatedEnv from "../config/env.config";
+import userService from "../services/user-service";
 
 const usersRouter = Router();
 
 //login
 usersRouter.post("/login", async (req, res) => {
   const { email, password } = await login.parseAsync(req.body);
-  const detectedUser = await UserDb.findOne({ email }).select({ password: 1, _id: 1, email: 1, isAdmin: 1 });
-  if (!detectedUser) {
-    return res.status(400).json(`User with ${email} not found in DB`);
-  }
-
-  const isPassValid = await bcrypt.compare(password, detectedUser.password);
-  if (!isPassValid) {
-    console.error(`Password = ${password}`);
-    const hash = await bcrypt.hash(password, 12);
-    console.error(`Hashed = ${hash}`);
-    console.error(`In user: ${detectedUser.password}`);
-
-    return res.status(401).json("You've been not authenticated!");
-  }
-
-  //TODO: Returm JWT token
-  const secret = new TextEncoder().encode(validatedEnv.JWT_SECRET);
-  const token = await new SignJWT({ email: detectedUser.email, admin: detectedUser.isAdmin })
-    .setProtectedHeader({ alg: "HS256", typ: "at+JWT" })
-    .setSubject(detectedUser._id.toString())
-    .setExpirationTime("15min")
-    .setIssuedAt()
-    .sign(secret);
-
+  const token = await userService.login(email, password);
   res.json({ msg: "Logged in successfully!", token: `${token}` });
 });
 
 usersRouter.post("/", async (req, res) => {
-  //Preparing
-  const validatedBody = await user.parseAsync(req.body);
-  const dbUser = new UserDb(validatedBody);
-  dbUser.password = await bcrypt.hash(dbUser.password, 12);
-
-  //Saving
-  const savedUser = await dbUser.save();
-
-  //Postsaving
-  res.json({ "new user id": savedUser._id });
+  const validatedRequest = await user.parseAsync(req.body);
+  const userResponse = await userService.createUser(validatedRequest);
+  res.json({ "new user id": userResponse });
 });
 
 usersRouter.post("/full", async (req, res) => {
@@ -111,6 +80,11 @@ usersRouter.get("/allIds2", async (req, res) => {
 usersRouter.get("/allIds3", async (req, res) => {
   const users = await UserDb.distinct("_id");
   res.json({ msg: users });
+});
+
+usersRouter.get("/allFully", async (req, res) => {
+  const allUsers = await userService.getUsers();
+  res.json({ allUsers: `${allUsers}` });
 });
 
 export default usersRouter;
