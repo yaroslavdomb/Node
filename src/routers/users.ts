@@ -4,19 +4,19 @@ import { user } from "../validators/user";
 import bcrypt from "bcrypt";
 import { login } from "../validators/login";
 import userService from "../services/user-service";
+import { validateLogin, validateUser } from "../middleware/input-validations";
+import validateToken from "../middleware/auth-validation";
 
 const usersRouter = Router();
 
 //login
-usersRouter.post("/login", async (req, res) => {
-  const { email, password } = await login.parseAsync(req.body);
-  const token = await userService.login(email, password);
+usersRouter.post("/login", validateLogin, async (req, res) => {
+  const token = await userService.login(req.body.email, req.body.password);
   res.json({ msg: "Logged in successfully!", token: `${token}` });
 });
 
-usersRouter.post("/", async (req, res) => {
-  const validatedRequest = await user.parseAsync(req.body);
-  const userResponse = await userService.createUser(validatedRequest);
+usersRouter.post("/", validateUser, async (req, res) => {
+  const userResponse = await userService.createUser(req.body);
   res.json({ "new user id": userResponse });
 });
 
@@ -63,7 +63,7 @@ usersRouter.post("/pass", async (req, res) => {
 });
 
 //Return from DB array of full document
-usersRouter.get("/allIds", async (req, res) => {
+usersRouter.get("/allIds", validateToken, async (req, res) => {
   const users = await UserDb.find();
   const detectedUsers = users.map((currUser) => currUser._id);
   res.json({ msg: detectedUsers });

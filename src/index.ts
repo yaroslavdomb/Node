@@ -24,7 +24,7 @@ app.use("/static", express.static(path.resolve("public")));
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/cards", cardsRouter);
 
-//Final onfiguration for server
+//Error handling
 app.use(notFound);
 app.use(errorHandler);
 

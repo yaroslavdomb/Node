@@ -3,11 +3,17 @@ import { MongoNetworkError, MongoServerError, MongoServerSelectionError } from "
 import { ZodError } from "zod";
 import env from "../config/env.config";
 
+const jwtValidationErrors = ["JOSEError", "JWKInvalid", "JWEInvalid"];
+
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   console.error(err);
 
   if (res.headersSent) {
     return next(err);
+  }
+
+  if (err.name && jwtValidationErrors.includes(err.name)) {
+    return res.status(400).json({ name: err.name });
   }
 
   if (err instanceof SyntaxError) {
