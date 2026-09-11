@@ -1,6 +1,5 @@
 import { Request, RequestHandler } from "express";
 import HttpError from "../errors/http-error";
-import { jwtVerify } from "jose";
 import authService from "../services/auth-service";
 import userModel from "../db/models/user";
 

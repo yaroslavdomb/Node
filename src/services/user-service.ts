@@ -20,6 +20,22 @@ const userService = {
     return await userModel.find({});
   },
 
+  getUser: async (id: string) => {
+    const detectedUser = await userModel.findById(id);
+    if (!detectedUser) {
+      throw new HttpError(`User with ${id} not found in DB`, 400);
+    }
+    return detectedUser;
+  },
+
+  updateUser: async (id: string, user: Partial<UserRequest>) => {
+    const detectedUser = await userModel.findByIdAndUpdate({ _id: id }, user, { new: true });
+    if (!detectedUser) {
+      throw new HttpError(`User with ${id} was NOT updated`, 400);
+    }
+    return detectedUser;
+  },
+
   login: async (email: string, password: string) => {
     const detectedUser = await userModel.findOne({ email }).select({ password: 1, _id: 1, email: 1, isAdmin: 1 });
     if (!detectedUser) {

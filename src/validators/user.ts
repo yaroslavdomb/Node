@@ -4,7 +4,7 @@ import { name } from "./name";
 import { PASS_REGEXP, ISRAEL_PHONE_REGEXP } from "./patterns";
 import { image } from "./image";
 
-export const user = z.object({
+export const user = z.strictObject({
   address: address,
   email: z.email().min(5).max(256),
   name: name,

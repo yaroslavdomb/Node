@@ -2,23 +2,47 @@ import { Router } from "express";
 import UserDb from "../db/models/user";
 import { user } from "../validators/user";
 import bcrypt from "bcrypt";
-import { login } from "../validators/login";
 import userService from "../services/user-service";
-import { validateLogin, validateUser } from "../middleware/input-validations";
+import { validateLoginSchema, validateUserForUpdate, validateUserSchema } from "../middleware/input-validations";
 import validateToken from "../middleware/auth-validation";
+import { hasAdminRole, hasOwnerOrAdminRole } from "../middleware/guards";
 
 const usersRouter = Router();
 
 //login
-usersRouter.post("/login", validateLogin, async (req, res) => {
+usersRouter.post("/login", validateLoginSchema, async (req, res) => {
   const token = await userService.login(req.body.email, req.body.password);
   res.json({ msg: "Logged in successfully!", token: `${token}` });
 });
 
-usersRouter.post("/", validateUser, async (req, res) => {
+usersRouter.post("/", validateUserSchema, validateToken, async (req, res) => {
   const userResponse = await userService.createUser(req.body);
   res.json({ "new user id": userResponse });
 });
+
+//Return from DB array of full document
+usersRouter.get("/allIdsByAdmin", ...hasAdminRole, async (req, res) => {
+  const users = await UserDb.find();
+  const detectedUsers = users.map((currUser) => currUser._id);
+  res.json({ msg: detectedUsers });
+});
+
+//
+usersRouter.get("/:id", ...hasOwnerOrAdminRole, async (req, res) => {
+  const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+  const detectedUser = await userService.getUser(id);
+  res.json({ user: detectedUser });
+});
+
+usersRouter.put("/:id", validateUserForUpdate, ...hasOwnerOrAdminRole, async (req, res) => {
+  const user = await userService.updateUser(req.body.id, req.body);
+  res.json({ user });
+});
+
+//****
+//
+
+// */
 
 usersRouter.post("/full", async (req, res) => {
   //Preparing
@@ -60,13 +84,6 @@ usersRouter.post("/pass", async (req, res) => {
 
   //Postsaving
   res.json({ password: password });
-});
-
-//Return from DB array of full document
-usersRouter.get("/allIds", validateToken, async (req, res) => {
-  const users = await UserDb.find();
-  const detectedUsers = users.map((currUser) => currUser._id);
-  res.json({ msg: detectedUsers });
 });
 
 // Covered request, return array of Objects having the single field inside (id)

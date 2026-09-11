@@ -10,5 +10,6 @@ export function validateSchema<T>(schema: ZodType<T>): RequestHandler<any, any, 
   };
 }
 
-export const validateUser = validateSchema(user);
-export const validateLogin = validateSchema(login);
+export const validateUserSchema = validateSchema(user);
+export const validateLoginSchema = validateSchema(login);
+export const validateUserForUpdate = validateSchema(user.partial());
