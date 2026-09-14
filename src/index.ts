@@ -1,6 +1,7 @@
 import validatedEnv from "./config/env.config";
 import express from "express";
 import path from "node:path";
+import morgan from "morgan";
 import usersRouter from "./routers/users";
 import cardsRouter from "./routers/cards";
 import loggerChalk from "./middleware/logger-chalk";
@@ -17,6 +18,7 @@ console.log("Starting application ...");
 
 //Initial configurations for server
 app.use(express.json());
+app.use(morgan("dev"));
 app.use(loggerPC);
 
 //Paths for routers
