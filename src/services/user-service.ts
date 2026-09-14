@@ -36,6 +36,14 @@ const userService = {
     return detectedUser;
   },
 
+  deleteUser: async (id: string) => {
+    const detectedUser = await userModel.findOneAndDelete({ _id: id });
+    if (!detectedUser) {
+      throw new HttpError(`User with ${id} was NOT updated`, 400);
+    }
+    return detectedUser;
+  },
+
   login: async (email: string, password: string) => {
     const detectedUser = await userModel.findOne({ email }).select({ password: 1, _id: 1, email: 1, isAdmin: 1 });
     if (!detectedUser) {

@@ -39,6 +39,11 @@ usersRouter.put("/:id", validateUserForUpdate, ...hasOwnerOrAdminRole, async (re
   res.json({ user });
 });
 
+usersRouter.delete("/:id", ...hasOwnerOrAdminRole, async (req, res) => {
+  const user = await userService.deleteUser(req.params.id as string);
+  res.json({ user });
+});
+
 //****
 //
 
