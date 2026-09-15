@@ -1,0 +1,12 @@
+Libs/env expected to be used:
+	- Node
+	- Express
+	- cors
+	- Mongodb/mongoose
+	- Morgan/pino/pino-http
+	- Dotenv
+	- jose
+	- bcrypt
+	- zod
+	- nodemon
+	
