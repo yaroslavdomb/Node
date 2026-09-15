@@ -10,6 +10,14 @@ const isAdmin: RequestHandler = (req, res, next) => {
   return next(new HttpError("Has no admin privilieges", 403));
 };
 
+const isOwner: RequestHandler = (req, res, next) => {
+  if (req.user?._id?.toString() === req.params.id) {
+    return next();
+  }
+
+  return next(new HttpError("Has no owner privilieges", 403));
+};
+
 const isOwnerOrAdmin: RequestHandler = (req, res, next) => {
   if (req.user?.isAdmin || req.user?._id?.toString() === req.params.id) {
     return next();
@@ -19,4 +27,5 @@ const isOwnerOrAdmin: RequestHandler = (req, res, next) => {
 };
 
 export const hasAdminRole: RequestHandler[] = [validateToken, isAdmin];
+export const hasOwnerRole: RequestHandler[] = [validateToken, isOwner];
 export const hasOwnerOrAdminRole: RequestHandler[] = [validateToken, isOwnerOrAdmin];
