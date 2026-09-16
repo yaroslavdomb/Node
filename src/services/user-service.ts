@@ -12,8 +12,8 @@ const userService = {
     const user = new userModel(userData);
     await user.setPassword(userData.password);
 
-    const savedObj = (await user.save()).toObject();
-    return savedObj._id;
+    const savedUser = (await user.save()).toObject();
+    return savedUser;
   },
 
   login: async (email: string, password: string) => {
@@ -37,7 +37,7 @@ const userService = {
   getUser: async (id: string) => {
     const detectedUser = await userModel.findById(id);
     if (!detectedUser) {
-      throw new HttpError(`User with ${id} not found in DB`, 400);
+      throw new HttpError(`User with id = ${id} was not found in DB`, 400);
     }
     return detectedUser;
   },

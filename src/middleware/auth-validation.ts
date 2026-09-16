@@ -13,7 +13,7 @@ const extractToken = (req: Request) => {
 
 const validateToken: RequestHandler = async (req, res, next) => {
   const token = extractToken(req);
-  const { email, admin } = await authService.verifyJWT(token);
+  const { email } = await authService.verifyJWT(token);
   const detectedUser = await userModel.findOne({ email });
   if (!detectedUser) {
     throw new HttpError("User not found", 400);

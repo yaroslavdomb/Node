@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 import { ZodType } from "zod";
 import { user } from "../validators/user";
+import { card } from "../validators/card";
 import { login } from "../validators/login";
 
 export function validateSchema<T>(schema: ZodType<T>): RequestHandler<any, any, T> {
@@ -10,6 +11,10 @@ export function validateSchema<T>(schema: ZodType<T>): RequestHandler<any, any, 
   };
 }
 
-export const validateUserSchema = validateSchema(user);
 export const validateLoginSchema = validateSchema(login);
-export const validateUserForUpdate = validateSchema(user.partial());
+
+export const validateFullUser = validateSchema(user);
+export const validatePartUser = validateSchema(user.partial());
+
+export const validateFullCard = validateSchema(card);
+export const validatePartCard = validateSchema(card.partial());

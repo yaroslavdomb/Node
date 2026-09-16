@@ -26,6 +26,11 @@ const isOwnerOrAdmin: RequestHandler = (req, res, next) => {
   return next(new HttpError("Has no admin/owner privilieges", 403));
 };
 
+const isBusinessUser: RequestHandler = (req, res, next) => {
+  return req.user?.isBusiness ? next() : next(new HttpError("Has no business privilieges", 403));
+};
+
 export const hasAdminRole: RequestHandler[] = [validateToken, isAdmin];
 export const hasOwnerRole: RequestHandler[] = [validateToken, isOwner];
 export const hasOwnerOrAdminRole: RequestHandler[] = [validateToken, isOwnerOrAdmin];
+export const hasBusinessRole: RequestHandler[] = [validateToken, isBusinessUser];

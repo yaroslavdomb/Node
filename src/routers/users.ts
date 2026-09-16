@@ -1,12 +1,12 @@
 import { Router } from "express";
 import userService from "../services/user-service";
-import { validateLoginSchema, validateUserForUpdate, validateUserSchema } from "../middleware/input-validations";
+import { validateLoginSchema, validateFullUser, validatePartUser } from "../middleware/input-validations";
 import { hasAdminRole, hasOwnerRole, hasOwnerOrAdminRole } from "../middleware/guards";
 import { logger } from "../logs/logger";
 
 const usersRouter = Router();
 
-usersRouter.post("/", validateUserSchema, async (req, res) => {
+usersRouter.post("/", validateFullUser, async (req, res) => {
   logger.info("createUser called");
   const userResponse = await userService.createUser(req.body);
   res.json({ "new user id": userResponse });
@@ -31,7 +31,7 @@ usersRouter.get("/:id", ...hasOwnerOrAdminRole, async (req, res) => {
   res.json({ user: detectedUser });
 });
 
-usersRouter.put("/:id", validateUserForUpdate, ...hasOwnerRole, async (req, res) => {
+usersRouter.put("/:id", validatePartUser, ...hasOwnerRole, async (req, res) => {
   logger.info("updateUser called");
   const user = await userService.updateUser(req.body.id as string, req.body);
   res.json({ user });

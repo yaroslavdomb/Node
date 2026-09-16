@@ -7,8 +7,7 @@ import { Card } from "../../validators/card";
 export type cardDB = Card & {
   userId: string;
   bizNumber: string;
-  likesNum: number;
-  likedBy: String[];
+  likes: String[];
   createdAt: Date;
   _id: Types.ObjectId;
 };
@@ -24,7 +23,6 @@ export const cardDBSchema = new Schema<cardDB>({
   image: { type: imageDBSchema, required: true },
   userId: { type: String, required: true },
   bizNumber: { type: String, required: true, unique: true },
-  likesNum: { type: Number, required: true },
-  likedBy: { type: [String], required: true },
+  likes: { type: [String], required: true },
   createdAt: { type: Date, required: true, default: Date.now }
 });
