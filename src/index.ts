@@ -2,9 +2,10 @@ import validatedEnv from "./config/env.config";
 import express from "express";
 import path from "node:path";
 import cors from "cors";
-//import morgan from "morgan";
+import morgan from "morgan";
 import usersRouter from "./routers/users";
 import cardsRouter from "./routers/cards";
+import rateLimit from "express-rate-limit";
 //import loggerChalk from "./middleware/logger-chalk";
 import loggerPC from "./middleware/logger-pc";
 import notFound from "./middleware/notFound";
@@ -17,20 +18,33 @@ dbConnection();
 
 //Initial configurations for server
 const app = express();
-app.use(express.json());
+
+//Getting access to sender reall IP and not of IP of proxy server
+app.set("trust proxy", 1);
+
+//Loggers config
 app.use(pinoHttp({ logger }));
-//app.use(morgan("dev"));
+app.use(morgan("dev"));
 app.use(loggerPC);
+
+// CORS configuration
 app.use(
   cors({
     origin: ["http://localhost:5137"],
-    methods: ["GET", "POST", "DELETE", "PUT"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization", "Accept"],
     credentials: true
   })
 );
 
-//console.log("Starting application ...");
+//Access sequrity configiration
+app.use(express.json({ limit: "2kb" }));
+const freqAccessLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 200
+});
+app.use("/api", freqAccessLimiter);
+
 logger.info("Starting application ...");
 
 //Paths for routers
@@ -42,6 +56,7 @@ app.use("/api/v1/cards", cardsRouter);
 app.use(notFound);
 app.use(errorHandler);
 
+//Start server listening
 const { SERVER_PORT, SCHEMA, SERVER } = validatedEnv;
 app.listen(SERVER_PORT, () => {
   console.warn(`Server started on ${SCHEMA}://${SERVER}:${SERVER_PORT}`);
