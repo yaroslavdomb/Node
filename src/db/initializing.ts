@@ -1,11 +1,11 @@
-import validatedEnv from "../config/env.config";
+import envConfig from "../config/env.config";
 import { MongoClient } from "mongodb";
 
 const initDB = async () => {
-  if (validatedEnv.ENV !== "prod") {
+  if (envConfig.ENV_TYPE !== "prod") {
     console.log(`Start populating DB...`);
 
-    if (validatedEnv.DB_TEST_ENABLED) {
+    if (envConfig.DB_TEST_ENABLED) {
       console.log(`Testing DB start ...`);
       const client = new MongoClient("mongodb://localhost:27017");
       await client.connect();
@@ -13,6 +13,7 @@ const initDB = async () => {
         test: true,
         insertedAt: new Date().toLocaleString()
       });
+
       await client.close();
       console.log(`Testing DB finished ...`);
     }
