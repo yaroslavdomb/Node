@@ -5,11 +5,11 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "tsc",
-    "tests_view": "vitest run --reporter=verbose",
-    "tests_watch": "vitest",
-    "dev_nodemon": "nodemon --exec tsx src/index.ts",
-    "dev_watch": "dotenvx run -f src/config/.env.dev -- tsx watch src/index.ts",
-    "prod": "dotenvx run -f src/config/.env.prod -- pm2 start src/index.ts --time --watch"
+    "tests_view": "cross-env ENV_TYPE=test vitest run --reporter=verbose",
+    "tests_watch": "cross-env ENV_TYPE=test vitest",
+    "dev_nodemon": "cross-env ENV_TYPE=dev nodemon --exec tsx src/index.ts",
+    "dev_watch": "cross-env ENV_TYPE=dev dotenvx run -f src/config/.env.dev -- tsx watch src/index.ts",
+    "prod": "cross-env ENV_TYPE=prod dotenvx run -f src/config/.env.prod -- pm2 start src/index.ts --time --watch"
   },
   "keywords": [],
   "author": "",
@@ -44,6 +44,7 @@
     "@types/morgan": "^1.9.10",
     "@types/node": "^26.4.0",
     "chalk": "^6.0.0",
+    "cross-env": "^10.1.0",
     "nodemon": "^3.1.14",
     "picocolors": "^1.1.1",
     "pino-pretty": "^13.1.3",

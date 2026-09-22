@@ -1,4 +1,4 @@
-import validatedEnv from "./config/env.config";
+import envConfig from "./config/env.config";
 import express from "express";
 import path from "node:path";
 import cors from "cors";
@@ -20,7 +20,9 @@ dbConnection();
 const app = express();
 
 //Getting access to sender reall IP and not of IP of proxy server
-app.set("trust proxy", 1);
+if (envConfig.TRUST_PROXY) {
+  app.set("trust proxy", 1);
+}
 
 //Loggers config
 app.use(pinoHttp({ logger }));
@@ -38,10 +40,10 @@ app.use(
 );
 
 //Access sequrity configiration
-app.use(express.json({ limit: "2kb" }));
+app.use(express.json({ limit: envConfig.JSON_BODY_LIMIT }));
 const freqAccessLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 200
+  windowMs: envConfig.RATE_LIMIT_WINDOW_MS,
+  max: envConfig.RATE_LIMIT_MAX_REQUESTS
 });
 app.use("/api", freqAccessLimiter);
 
@@ -57,7 +59,7 @@ app.use(notFound);
 app.use(errorHandler);
 
 //Start server listening
-const { SERVER_PORT, SCHEMA, SERVER } = validatedEnv;
+const { SERVER_PORT, SCHEMA, SERVER } = envConfig;
 app.listen(SERVER_PORT, () => {
   console.warn(`Server started on ${SCHEMA}://${SERVER}:${SERVER_PORT}`);
 });
