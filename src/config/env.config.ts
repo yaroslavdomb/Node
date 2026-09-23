@@ -24,6 +24,7 @@ const envSchema = z.object({
   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace", "silent"]).default("info"),
   SCHEMA: z.enum(["http", "https", "ftp"]).default("http"),
   JWT_SECRET: z.string().min(32, "JWT is mandatory"),
+  JWT_VALID_TIME: z.string().default("15min"),
   TRUST_PROXY: z.coerce.boolean().default(false),
   RATE_LIMIT_WINDOW_MS: z.coerce.number().default(15 * 60 * 1000),
   RATE_LIMIT_MAX_REQUESTS: z.coerce.number().default(200),

@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { SignJWT, JWTPayload, jwtVerify } from "jose";
-import validatedEnv from "../config/env.config";
+import envConfig from "../config/env.config";
 
 const authService = {
   hashPassword: (plainPassword: string, rounds: number = 12) => {
@@ -12,16 +12,16 @@ const authService = {
   },
 
   generateJWT: (payload: JWTPayload) => {
-    const secret = new TextEncoder().encode(validatedEnv.JWT_SECRET);
+    const secret = new TextEncoder().encode(envConfig.JWT_SECRET);
     return new SignJWT({ ...payload })
       .setProtectedHeader({ alg: "HS256", typ: "at+JWT" })
-      .setExpirationTime("15min")
+      .setExpirationTime(envConfig.JWT_VALID_TIME)
       .setIssuedAt()
       .sign(secret);
   },
 
   verifyJWT: (token: string) => {
-    const secret = new TextEncoder().encode(validatedEnv.JWT_SECRET);
+    const secret = new TextEncoder().encode(envConfig.JWT_SECRET);
     return jwtVerify(token, secret).then((result) => result.payload);
   }
 };
