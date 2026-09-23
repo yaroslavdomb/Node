@@ -46,7 +46,7 @@ const userService = {
 
   updateUser: async (id: string, user: Partial<UserRequest>) => {
     try {
-      const updatedUser = await userModel.findByIdAndUpdate(id, user, { new: true, runValidators: true });
+      const updatedUser = await userModel.findByIdAndUpdate(id, user, { returnDocument: "after", runValidators: true });
       if (!updatedUser) {
         throw new HttpError(`User with id = ${id} was NOT updated`, 400);
       }
@@ -61,19 +61,23 @@ const userService = {
   },
 
   changeUserBusinessStatus: async (id: string) => {
-    const userWithChangedBS = await userModel.findByIdAndUpdate({ _id: id }, { $bit: { isBusiness: { xor: 1 } } });
+    const userWithChangedBS = await userModel.findByIdAndUpdate(
+      id,
+      [{ $set: { isBusiness: { $not: "$isBusiness" } } }],
+      { updatePipeline: true, returnDocument: "after" }
+    );
     if (!userWithChangedBS) {
-      throw new HttpError(`User with ${id} was NOT updated`, 400);
+      throw new HttpError(`Business status for user with id = ${id} was NOT updated`, 400);
     }
     return userWithChangedBS;
   },
 
   deleteUser: async (id: string) => {
-    const detectedUser = await userModel.findOneAndDelete({ _id: id });
-    if (!detectedUser) {
-      throw new HttpError(`User with ${id} was NOT updated`, 400);
+    const deletedUser = await userModel.findOneAndDelete({ _id: id });
+    if (!deletedUser) {
+      throw new HttpError(`User with id = ${id} was NOT deleted`, 400);
     }
-    return detectedUser;
+    return deletedUser;
   }
 };
 

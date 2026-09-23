@@ -39,7 +39,7 @@ usersRouter.put("/:id", validatePartUser, ...hasOwnerRole, async (req, res) => {
 
 usersRouter.patch("/:id", ...hasOwnerRole, async (req, res) => {
   logger.info("changeUserBusinessStatus called");
-  const user = await userService.changeUserBusinessStatus(req.body.id as string);
+  const user = await userService.changeUserBusinessStatus(req.params.id as string);
   res.json({ user });
 });
 
