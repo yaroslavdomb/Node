@@ -6,7 +6,9 @@ import env from "../config/env.config";
 const jwtValidationErrors = ["JOSEError", "JWKInvalid", "JWEInvalid"];
 
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-  console.error(err);
+  if (env.LOG_LEVEL === "debug") {
+    console.error(err);
+  }
 
   if (res.headersSent) {
     return next(err);
@@ -32,8 +34,7 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
 
   if (err instanceof MongoNetworkError || err instanceof MongoServerSelectionError) {
     return res.status(503).json({
-      type: "Network/timeout error",
-      stack: env.LOG_LEVEL === "debug" ? err.stack : undefined
+      type: "Network/timeout error"
     });
   }
 
@@ -45,8 +46,7 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
       msg: err.errmsg,
       code: err.code,
       cause: err.cause,
-      name: err.name,
-      stack: env.LOG_LEVEL === "debug" ? err.stack : undefined
+      name: err.name
     });
   }
 
@@ -56,8 +56,7 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   }
 
   return res.status(status).json({
-    message: err.message || "Internal Server Error",
-    stack: env.LOG_LEVEL === "debug" ? err.stack : undefined
+    message: err.message || "Internal Server Error"
   });
 };
 
