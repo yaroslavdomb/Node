@@ -8,7 +8,7 @@
     "tests_view": "cross-env ENV_TYPE=test vitest run --reporter=verbose",
     "tests_watch": "cross-env ENV_TYPE=test vitest",
     "dev_nodemon": "cross-env ENV_TYPE=dev nodemon --exec tsx src/index.ts",
-    "dev_watch": "cross-env ENV_TYPE=dev dotenvx run -f src/config/.env.dev -- tsx watch src/index.ts",
+    "dev_watch": "cross-env ENV_TYPE=dev dotenvx run -f src/config/.env.dev -- tsx watch --inspect -- src/index.ts",
     "prod": "cross-env ENV_TYPE=prod dotenvx run -f src/config/.env.prod -- pm2 start src/index.ts --time --watch"
   },
   "keywords": [],

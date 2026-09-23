@@ -3,12 +3,23 @@ import HttpError from "../errors/http-error";
 import authService from "../services/auth-service";
 import userModel from "../db/models/user";
 
-const extractToken = (req: Request) => {
+const extractToken = (req: Request): string => {
   const authToken = req.header("Authorization");
-  if (authToken && authToken.toLocaleLowerCase().startsWith("bearer ")) {
-    return authToken.substring(7);
+  if (!authToken) {
+    throw new HttpError("No authorization key", 401);
   }
-  throw new HttpError("Wrong authorization", 401);
+
+  if (!authToken.toLowerCase().startsWith("bearer ")) {
+    throw new HttpError("Not able to recognize authorization schema", 401);
+  }
+
+  const token = authToken.substring(7).trim();
+
+  if (!token) {
+    throw new HttpError("Empty authorization token provided", 401);
+  }
+
+  return token;
 };
 
 const validateToken: RequestHandler = async (req, res, next) => {
