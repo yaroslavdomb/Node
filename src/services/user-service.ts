@@ -2,6 +2,8 @@ import { User as UserRequest } from "../validators/user";
 import userModel from "../db/models/user";
 import HttpError from "../errors/http-error";
 import authService from "./auth-service";
+import { error } from "node:console";
+import { logger } from "../logs/logger";
 
 const userService = {
   createUser: async (userData: UserRequest) => {
@@ -43,11 +45,19 @@ const userService = {
   },
 
   updateUser: async (id: string, user: Partial<UserRequest>) => {
-    const updatedUser = await userModel.findByIdAndUpdate({ _id: id }, user, { new: true });
-    if (!updatedUser) {
-      throw new HttpError(`User with ${id} was NOT updated`, 400);
+    try {
+      const updatedUser = await userModel.findByIdAndUpdate(id, user, { new: true, runValidators: true });
+      if (!updatedUser) {
+        throw new HttpError(`User with id = ${id} was NOT updated`, 400);
+      }
+      return updatedUser;
+    } catch (error: any) {
+      if (error.code === 11000) {
+        throw new HttpError("User with this email already exists", 409);
+      }
+      logger.error(error);
+      throw new HttpError(`Internal error while user update`, 500);
     }
-    return updatedUser;
   },
 
   changeUserBusinessStatus: async (id: string) => {

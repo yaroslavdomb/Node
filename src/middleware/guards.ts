@@ -11,7 +11,7 @@ const isAdmin: RequestHandler = (req, res, next) => {
 };
 
 const isOwner: RequestHandler = (req, res, next) => {
-  if (req.user?._id?.toString() === req.params.id) {
+  if (String(req.user?._id) === req.params.id) {
     return next();
   }
 

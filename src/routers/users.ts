@@ -33,7 +33,7 @@ usersRouter.get("/:id", ...hasOwnerOrAdminRole, async (req, res) => {
 
 usersRouter.put("/:id", validatePartUser, ...hasOwnerRole, async (req, res) => {
   logger.info("updateUser called");
-  const user = await userService.updateUser(req.body.id as string, req.body);
+  const user = await userService.updateUser(req.params.id as string, req.body);
   res.json({ user });
 });
 

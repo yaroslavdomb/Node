@@ -24,7 +24,7 @@ export const userDBSchema = new Schema<IUserDoc, IUserModel>({
   address: { type: addressDBSchema, required: true },
   name: { type: nameDBSchema, required: true },
   image: { type: imageDBSchema, required: true },
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   password: { type: String, required: true, select: false, minlength: 8, maxlength: 100 },
   phone: { type: String, required: true },
   isBusiness: { type: Boolean, required: false },
