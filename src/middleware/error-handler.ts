@@ -2,6 +2,7 @@ import { ErrorRequestHandler } from "express";
 import { MongoNetworkError, MongoServerError, MongoServerSelectionError } from "mongodb";
 import { ZodError } from "zod";
 import env from "../config/env.config";
+import HttpError from "../errors/http-error";
 
 const jwtValidationErrors = ["JOSEError", "JWKInvalid", "JWEInvalid"];
 
@@ -12,6 +13,10 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
 
   if (res.headersSent) {
     return next(err);
+  }
+
+  if (err instanceof HttpError && err.headers) {
+    res.set(err.headers);
   }
 
   if (err.name && jwtValidationErrors.includes(err.name)) {

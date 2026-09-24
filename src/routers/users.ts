@@ -14,7 +14,11 @@ usersRouter.post("/", validateFullUser, async (req, res) => {
 
 usersRouter.post("/login", validateLoginSchema, async (req, res) => {
   logger.info("login called");
-  const token = await userService.login(req.body.email, req.body.password);
+  const token = await userService.login({
+    ip: req.ip || req.socket.remoteAddress || "127.0.0.1",
+    email: req.body.email,
+    password: req.body.password
+  });
   res.json({ Token: token });
 });
 

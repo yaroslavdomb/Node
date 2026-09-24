@@ -28,7 +28,10 @@ const envSchema = z.object({
   TRUST_PROXY: z.coerce.boolean().default(false),
   RATE_LIMIT_WINDOW_MS: z.coerce.number().default(15 * 60 * 1000),
   RATE_LIMIT_MAX_REQUESTS: z.coerce.number().default(200),
-  JSON_BODY_LIMIT: z.string().default("2kb")
+  JSON_BODY_LIMIT: z.string().default("2kb"),
+  LOGIN_RETRY_LIMIT: z.coerce.number().default(5),
+  LOGIN_WINDOW_DURATION: z.coerce.number().default(3600),
+  LOGIN_BLOCK_DURATION: z.coerce.number().default(7200)
 });
 
 const result = envSchema.safeParse(process.env);
