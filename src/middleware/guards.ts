@@ -7,7 +7,7 @@ const isAdmin: RequestHandler = (req, res, next) => {
     return next();
   }
 
-  return next(new HttpError("Has no admin privilieges", 403));
+  return next(new HttpError("Admin privileges required", 403));
 };
 
 const isOwner: RequestHandler = (req, res, next) => {
@@ -15,7 +15,7 @@ const isOwner: RequestHandler = (req, res, next) => {
     return next();
   }
 
-  return next(new HttpError("Has no owner privilieges", 403));
+  return next(new HttpError("Owner privileges required", 403));
 };
 
 const isOwnerOrAdmin: RequestHandler = (req, res, next) => {
@@ -23,11 +23,11 @@ const isOwnerOrAdmin: RequestHandler = (req, res, next) => {
     return next();
   }
 
-  return next(new HttpError("Has no admin/owner privilieges", 403));
+  return next(new HttpError("Admin/owner privileges required", 403));
 };
 
 const isBusinessUser: RequestHandler = (req, res, next) => {
-  return req.user?.isBusiness ? next() : next(new HttpError("Has no business privilieges", 403));
+  return req.user?.isBusiness ? next() : next(new HttpError("Business privileges required", 403));
 };
 
 export const hasAdminRole: RequestHandler[] = [validateToken, isAdmin];
