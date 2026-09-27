@@ -31,20 +31,37 @@ After running `pnpm install`, check the `src/config/` folder for `.env.dev`, `.e
 ## Defaults and Limitations
 
 1. **Login Rate Limiting**: 5 wrong login attempts per email/IP pair within 1 hour results in a 2-hour ban for that pair.
-   Configured by:
-   - `LOGIN_RETRY_LIMIT`
-   - `LOGIN_WINDOW_DURATION`
-   - `LOGIN_BLOCK_DURATION`
+  Configured by:
+    - `LOGIN_RETRY_LIMIT`
+    - `LOGIN_WINDOW_DURATION`
+    - `LOGIN_BLOCK_DURATION`
 
-2. **JWT Expiration**: Access token is valid for 15 minutes.
-   Configured by:
-   - `JWT_VALID_TIME`
+2. **JWT Expiration**: User Access token (created after login call) is valid for 15 minutes.
+  Configured by:
+    - `JWT_VALID_TIME`
 
 3. **Payload Limit**: Maximum JSON body size is 2 KB.
-   Configured by:
-   - `JSON_BODY_LIMIT`
+  Configured by:
+    - `JSON_BODY_LIMIT`
 
 4. **Global Rate Limiting**: 200 requests per 15 minutes per IP.
-   Configured by:
-   - `RATE_LIMIT_WINDOW_MS`
-   - `RATE_LIMIT_MAX_REQUESTS`
+  Configured by:
+    - `RATE_LIMIT_WINDOW_MS`
+    - `RATE_LIMIT_MAX_REQUESTS`
+
+5. **Ports**: 8050 - server, 27017 - Mongo DB
+  Configured by:
+    - `SERVER_PORT`
+    - `DB_PORT`
+
+6. **Data base name**: Nodejs_final_project
+  Configured by:
+    - `DB_NAME`
+
+7. **Testing data**: create DB, 3 users and up to 15 cards per each. Due to using Mongo, DB with another collection name will be used for connectivity testing and write option. 
+  Configured by:
+    - `DB_INIT_INFRA`
+    - `DB_INIT_USERS` = number of users to generate
+    - `DB_INIT_CARDS` = number of cards(up to) per user will be generated (exact number selected randomly) 
+    - `DB_TEST_TABLE`
+

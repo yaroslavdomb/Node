@@ -14,7 +14,7 @@ const connect = async (
     await initDB();
     console.log(`DB Initialized`);
   } catch (error) {
-    console.error(`Failed to work with DB using ${connStr}`);
+    console.error(`Failed to work with DB using ${connStr}: ` + error);
     process.exit(1);
   }
 };
