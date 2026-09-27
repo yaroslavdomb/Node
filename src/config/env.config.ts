@@ -16,8 +16,9 @@ dotenv.config({
 
 const envSchema = z.object({
   ENV_TYPE: envTypeSchema,
-  DB_CONNECTION_STR: z.string().min(1, "DB_CONNECTION_STR is mandatory field"),
+  DB_HOST: z.string().min(1, "DB_HOST is mandatory field"),
   DB_PORT: z.coerce.number().min(1000).max(65535),
+  DB_NAME: z.string().min(1, "DB_NAME is mandatory field"),
   DB_TEST_ENABLED: z.coerce.boolean().default(false),
   SERVER_PORT: z.coerce.number().min(1000).max(65535),
   SERVER: z.string(),

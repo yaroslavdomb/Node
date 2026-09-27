@@ -1,8 +1,10 @@
-import validatedEnv from "../config/env.config";
+import envConfig from "../config/env.config";
 import mongoose from "mongoose";
 import initDB from "./initializing";
 
-const connect = async (connStr: string = validatedEnv.DB_CONNECTION_STR) => {
+const connect = async (
+  connStr: string = `mongodb://${envConfig.DB_HOST}:${envConfig.DB_PORT}/${envConfig.DB_NAME}`
+) => {
   try {
     console.log(`**********************************`);
 
