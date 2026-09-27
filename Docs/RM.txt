@@ -60,8 +60,18 @@ After running `pnpm install`, check the `src/config/` folder for `.env.dev`, `.e
 
 7. **Testing data**: create DB, 3 users and up to 15 cards per each. Due to using Mongo, DB with another collection name will be used for connectivity testing and write option. 
   Configured by:
-    - `DB_INIT_INFRA`
-    - `DB_INIT_USERS` = number of users to generate
-    - `DB_INIT_CARDS` = number of cards(up to) per user will be generated (exact number selected randomly) 
-    - `DB_TEST_TABLE`
+    - `DB_INIT_INFRA` = true/false, for true will create DB and test connection 
+    - `DB_TEST_TABLE` = name of collection to be used for DB_INIT_INFRA test
+    - `DB_INIT_USERS` = number of users to be generated. 
+        User will have email in form ABC, where: 
+          A = 4 letters(presenting of capital/nonCapitral granted) 
+          B = 4 digits 
+          C = postfix "@test.com"
+        User password will be of type
+          A = 4 letters(presenting of capital/nonCapitral granted)
+          B = 4 digits
+          D = "!"
+    - `DB_INIT_CARDS` = number of cards to be generated. 
+        Cards will be spread between the existing users. Put attention - not between just generated users, but all of users existing in DB! 
+    
 
