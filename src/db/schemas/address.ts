@@ -14,12 +14,6 @@ export const addressDBSchema = new Schema<Address>({
     minlength: 2,
     maxlength: 25
   },
-  countryCode: {
-    type: String,
-    required: true,
-    minlength: 2,
-    maxlength: 3
-  },
   houseNumber: {
     type: Number,
     required: true,

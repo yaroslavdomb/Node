@@ -11,7 +11,6 @@ Content-Type: application/json
     "street": "Stroitelej",
     "city": "Tel-Avi",
     "country": "ISrael",
-    "countryCode": "ISL",
     "state": "center",
     "houseNumber": 3,
     "zipCode": 12345

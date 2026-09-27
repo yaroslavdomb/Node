@@ -2,21 +2,21 @@ import { Schema } from "mongoose";
 import { inName } from "../../validators/name";
 
 export const nameDBSchema = new Schema<inName>({
-  firstName: {
+  first: {
     type: String,
     minLength: 2,
     maxLength: 100,
     required: true,
     alias: "firstN"
   },
-  lastName: {
+  last: {
     type: String,
     minLength: 2,
     maxLength: 100,
     required: true,
     alias: "lastN"
   },
-  middleName: {
+  middle: {
     type: String,
     minLength: 2,
     maxLength: 100,
