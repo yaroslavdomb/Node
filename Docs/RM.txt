@@ -10,3 +10,15 @@ Libs/env expected to be used:
 	- zod
 	- nodemon
 	
+## Environment Setup
+
+This project uses environment-specific config files located in `src/config/`, which are **not committed** to the repository.
+An example file (.env.example) containing default values is provided instead. `.env.dev`, `.env.test` and `.env.prod` will be created automatically once running `pnpm install`.
+
+### 1. Check the config files
+
+After running `pnpm install`, check the `src/config/` folder for `.env.dev`, `.env.test` and `.env.prod` files. If they exist, open them and set your own values (if needed).
+
+### 2. If the files are missing
+
+If the files are missing in src/config/, copy src/config/.env.example and rename it to .env.dev, .env.test, or .env.prod, and then fill it with proper values for each environment.
