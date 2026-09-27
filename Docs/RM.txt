@@ -1,10 +1,10 @@
-Libs/env expected to be used:
-	- Node
-	- Express
+## Libs/env expected to be used:
+	- node
+	- express
 	- cors
-	- Mongodb/mongoose
-	- Morgan/pino/pino-http
-	- Dotenv
+	- mongodb/mongoose
+	- morgan/pino/pino-http
+	- dotenv
 	- jose
 	- bcrypt
 	- zod
@@ -13,7 +13,7 @@ Libs/env expected to be used:
 ## Environment Setup
 
 This project uses environment-specific config files located in `src/config/`, which are **not committed** to the repository.
-An example file (.env.example) containing default values is provided instead. `.env.dev`, `.env.test` and `.env.prod` will be created automatically once running `pnpm install`.
+An example file (`.env.example`) containing default values is provided instead. `.env.dev`, `.env.test` and `.env.prod` will be created automatically once running `pnpm install`.
 
 ### 1. Check the config files
 
@@ -21,4 +21,30 @@ After running `pnpm install`, check the `src/config/` folder for `.env.dev`, `.e
 
 ### 2. If the files are missing
 
-If the files are missing in src/config/, copy src/config/.env.example and rename it to .env.dev, .env.test, or .env.prod, and then fill it with proper values for each environment.
+1) Make sure `src/config/.env.example` exists and run:
+  pnpm run postinstall
+
+2) If the files are still missing:
+  2.1) copy `src/config/.env.example` and rename it to `.env.dev`, `.env.test`, or `.env.prod`, 
+  2.2) fill the file with proper values for each environment.
+
+## Defaults and Limitations
+
+1. **Login Rate Limiting**: 5 wrong login attempts per email/IP pair within 1 hour results in a 2-hour ban for that pair.
+   Configured by:
+   - `LOGIN_RETRY_LIMIT`
+   - `LOGIN_WINDOW_DURATION`
+   - `LOGIN_BLOCK_DURATION`
+
+2. **JWT Expiration**: Access token is valid for 15 minutes.
+   Configured by:
+   - `JWT_VALID_TIME`
+
+3. **Payload Limit**: Maximum JSON body size is 2 KB.
+   Configured by:
+   - `JSON_BODY_LIMIT`
+
+4. **Global Rate Limiting**: 200 requests per 15 minutes per IP.
+   Configured by:
+   - `RATE_LIMIT_WINDOW_MS`
+   - `RATE_LIMIT_MAX_REQUESTS`
