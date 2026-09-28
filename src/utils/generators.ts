@@ -6,6 +6,10 @@ export function get10000Random(): number {
   return Math.floor(Math.random() * 10001);
 }
 
+export function getRandomNumUpToBillion(): number {
+  return Math.floor(Math.random() * 1_000_000_000_1);
+}
+
 export function generate4RandomDigits(): number {
   return Math.floor(1000 + Math.random() * 9000);
 }

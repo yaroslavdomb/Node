@@ -1,5 +1,4 @@
 import { Schema, Types } from "mongoose";
-
 import { addressDBSchema } from "./address";
 import { imageDBSchema } from "./image";
 import { Card } from "../../validators/card";
