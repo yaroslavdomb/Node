@@ -54,6 +54,7 @@ const cardService = {
     } else {
       cardDetected.likes.splice(userIdIndex, 1);
     }
+
     return (await cardDetected.save()).toObject();
   },
 

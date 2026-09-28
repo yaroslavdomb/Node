@@ -9,17 +9,6 @@ const initDB = async () => {
   if (envConfig.ENV_TYPE !== "prod") {
     console.log(`  >>>>  Start populating DB...`);
 
-    if (envConfig.DB_INIT_INFRA) {
-      console.log(`  >>>>  Start to (re)create DB ...`);
-      const testCollection = mongoose.connection.collection(envConfig.DB_TEST_TABLE);
-      await testCollection.insertOne({
-        test: true,
-        insertedAt: new Date().toLocaleString()
-      });
-      console.log(`Please check "${envConfig.DB_TEST_TABLE}" collection`);
-      console.log(`  <<<<  Finish to (re)create DB ...`);
-    }
-
     if (envConfig.DB_INIT_USERS > 0) {
       console.log(`  >>>>  Start to init ${envConfig.DB_INIT_USERS} users ...`);
       const usersList = await generateUsersList(envConfig.DB_INIT_USERS);
