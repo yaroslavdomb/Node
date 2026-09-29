@@ -1,6 +1,6 @@
 import { get100Random, get10000Random, generate4RandomDigits, generate4RandomLetters } from "../utils/generators";
 import userModel from "../db/models/user";
-import { reserveAndGetBulkBizNumbers } from "../factories/bizNumberCounter";
+import { reserveAndGetBizNumbers } from "../factories/bizNumberCounter";
 
 function generateCard(userId: string, grantedUniqueBizNumber: string) {
   return {
@@ -37,7 +37,7 @@ export async function generateCardsList(cardsToBeCreated: number) {
   }
 
   const cardsList: ReturnType<typeof generateCard>[] = [];
-  const firstFreeBizNumberObj = await reserveAndGetBulkBizNumbers(cardsToBeCreated);
+  const firstFreeBizNumberObj = await reserveAndGetBizNumbers(cardsToBeCreated);
 
   for (let i = 0; i < cardsToBeCreated; i++) {
     const cardOwnerId = userIds[Math.floor(Math.random() * userIds.length)];

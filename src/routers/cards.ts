@@ -7,45 +7,45 @@ import { validateFullCard, validatePartCard } from "../middleware/input-validati
 
 const cardRouter = Router();
 
-cardRouter.get("/", (req, res) => {
+cardRouter.get("/", async (req, res) => {
   logger.info("getListOfAllCards called");
-  const listOfAllCards = cardService.getListOfAllCards();
+  const listOfAllCards = await cardService.getListOfAllCards();
   res.json({ list: listOfAllCards });
 });
 
-cardRouter.get("/my-cards", validateToken, (req, res) => {
+cardRouter.get("/my-cards", validateToken, async (req, res) => {
   logger.info("getOwnerCards called");
-  const ownerCards = cardService.getOwnerCards(req.body.id as string);
+  const ownerCards = await cardService.getOwnerCards(req.body.id as string);
   res.json({ list: ownerCards });
 });
 
 cardRouter.get("/:id", async (req, res) => {
   logger.info("getCardById called");
-  const cardById = cardService.getCardById(req.params.id as string);
+  const cardById = await cardService.getCardById(req.params.id as string);
   res.json({ card: cardById });
 });
 
 cardRouter.post("/", ...hasBusinessRole, async (req, res) => {
   logger.info("createCard called");
-  const createdCard = cardService.createCard(req.body);
+  const createdCard = await cardService.createCard(req.body, req.user!._id.toString());
   res.json({ createdCard: createdCard });
 });
 
 cardRouter.put("/:id", validateFullCard, ...hasOwnerRole, async (req, res) => {
   logger.info("updateCard called");
-  const updatedCard = cardService.updateCard(req.params.id as string, req.body);
+  const updatedCard = await cardService.updateCard(req.params.id as string, req.body);
   res.json({ updatedCard: updatedCard });
 });
 
 cardRouter.patch("/:id", validatePartCard, validateToken, async (req, res) => {
   logger.info("changeLikeStatus called");
-  const likedCard = cardService.changeLikeStatus(req.params.id as string, req.body);
+  const likedCard = await cardService.changeLikeStatus(req.params.id as string, req.body);
   res.json({ updatedCard: likedCard });
 });
 
 cardRouter.delete("/:id", ...hasOwnerOrAdminRole, async (req, res) => {
   logger.info("deleteCard called");
-  const deletedCard = cardService.deleteCard(req.params.id as string);
+  const deletedCard = await cardService.deleteCard(req.params.id as string);
   res.json({ deletedCard: deletedCard });
 });
 

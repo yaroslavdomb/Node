@@ -2,6 +2,7 @@ import cardModel from "../db/models/card";
 import HttpError from "../errors/http-error";
 import { Card as CardRequest } from "../validators/card";
 import { userDB } from "../db/schemas/user";
+import { reserveAndGetBizNumbers } from "../factories/bizNumberCounter";
 
 const cardService = {
   getListOfAllCards: async () => {
@@ -26,8 +27,9 @@ const cardService = {
     return card;
   },
 
-  createCard: async (cardData: CardRequest) => {
-    const card = new cardModel(cardData);
+  createCard: async (cardData: CardRequest, userId: string) => {
+    const bizNumber = await reserveAndGetBizNumbers(1);
+    const card = new cardModel({ ...cardData, userId: userId, bizNumber: String(bizNumber.firstReserved) });
     const savedCard = (await card.save()).toObject();
     return savedCard;
   },
