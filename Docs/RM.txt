@@ -58,7 +58,7 @@ After running `pnpm install`, check the `src/config/` folder for `.env.dev`, `.e
   Configured by:
     - `DB_NAME`
 
-7. **Testing data**: create DB, 3 users and up to 15 cards per each. Due to using Mongo, DB with another collection name will be used for connectivity testing and write option. 
+7. **Testing data**: create DB, 3 users and up to 15 cards per each.
   Configured by:
     - `DB_INIT_USERS` = number of users to be generated. 
         User will have email in form ABC, where: 
@@ -70,6 +70,15 @@ After running `pnpm install`, check the `src/config/` folder for `.env.dev`, `.e
           B = 4 digits
           D = "!"
     - `DB_INIT_CARDS` = number of cards to be generated. 
-        Cards will be spread between the existing users. Put attention - not between just generated users, but all of users existing in DB! 
-    
+        Cards will be spread between the existing users. Put attention - not between just generated users, but all of the users existing currently in DB! 
+
+## DB structure 
+
+1) **DB name** = "Node_final_project"
+
+2) **Collections**
+  - cards
+  - users
+  - biz_number_counter = keep the auto-incremented counter of biz_number for cards collection to grant its   uniquiness. Starts from 0 for just created DB.
+
 
