@@ -30,17 +30,19 @@ function generateCard(userId: string, grantedUniqueBizNumber: string) {
 }
 
 export async function generateCardsList(cardsToBeCreated: number) {
-  const users = await userModel.find({}, "_id").lean();
-  const userIds = users.map((user) => user._id.toString());
-  if (!userIds || userIds.length === 0) {
-    throw new Error("Cannot create cards - no users exist in the database!");
+  const businessUsersIdsObj = await userModel.find({ isBusiness: true }, { _id: 1 }).lean();
+  const businessUsersIds = businessUsersIdsObj.map((user) => user._id.toString());
+  if (!businessUsersIds || businessUsersIds.length === 0) {
+    throw new Error("Cannot create cards - no business users found in DB!");
+  } else {
+    console.log(`      Found ${businessUsersIds.length} business users`);
   }
 
   const cardsList: ReturnType<typeof generateCard>[] = [];
   const firstFreeBizNumberObj = await reserveAndGetBizNumbers(cardsToBeCreated);
 
   for (let i = 0; i < cardsToBeCreated; i++) {
-    const cardOwnerId = userIds[Math.floor(Math.random() * userIds.length)];
+    const cardOwnerId = businessUsersIds[Math.floor(Math.random() * businessUsersIds.length)];
     cardsList.push(generateCard(cardOwnerId, String(firstFreeBizNumberObj.firstReserved + i)));
   }
 
