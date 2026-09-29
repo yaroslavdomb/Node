@@ -1,6 +1,7 @@
 import { get100Random, get10000Random, generate4RandomDigits, generate4RandomLetters } from "../utils/generators";
 import userModel from "../db/models/user";
 import { reserveAndGetBizNumbers } from "../factories/bizNumberCounter";
+import { logger } from "../logs/logger";
 
 function generateCard(userId: string, grantedUniqueBizNumber: string) {
   return {
@@ -35,7 +36,7 @@ export async function generateCardsList(cardsToBeCreated: number) {
   if (!businessUsersIds || businessUsersIds.length === 0) {
     throw new Error("Cannot create cards - no business users found in DB!");
   } else {
-    console.log(`      Found ${businessUsersIds.length} business users`);
+    logger.info(`Found ${businessUsersIds.length} business users`);
   }
 
   const cardsList: ReturnType<typeof generateCard>[] = [];
