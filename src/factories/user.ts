@@ -42,9 +42,9 @@ export async function generateUsersList(usersToBeCreated: number) {
     const digits = generate4RandomDigits();
     const letters = generate4RandomLetters();
     const hashedPass = await authService.hashPassword(letters + digits.toString() + "!");
-
     usersList.push(generateUser(digits, letters, hashedPass));
   }
+  usersList[0].isBusiness = true;
 
   return usersList;
 }
