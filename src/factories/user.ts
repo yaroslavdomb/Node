@@ -44,7 +44,17 @@ export async function generateUsersList(usersToBeCreated: number) {
     const hashedPass = await authService.hashPassword(letters + digits.toString() + "!");
     usersList.push(generateUser(digits, letters, hashedPass));
   }
-  usersList[0].isBusiness = true;
+
+  if (usersToBeCreated >= 3) {
+    usersList[0].isBusiness = false;
+    usersList[0].isAdmin = false;
+
+    usersList[1].isBusiness = true;
+    usersList[1].isAdmin = false;
+
+    usersList[2].isBusiness = false;
+    usersList[2].isAdmin = true;
+  }
 
   return usersList;
 }
