@@ -1,4 +1,10 @@
-import { get100Random, get10000Random, generate4RandomDigits, generate4RandomLetters } from "../utils/generators";
+import {
+  get100Random,
+  get10000Random,
+  generate4RandomDigits,
+  generate4RandomLetters,
+  getRandomISRPhone
+} from "../utils/generators";
 import authService from "../services/auth-service";
 
 function generateUser(digits: number, letters: string, password: string) {
@@ -22,7 +28,7 @@ function generateUser(digits: number, letters: string, password: string) {
     },
     email: `${letters}${digits}@test.com`,
     password: password,
-    phone: `050${Math.floor(1000000 + Math.random() * 9000000)}`,
+    phone: getRandomISRPhone(),
     isBusiness: Math.random() > 0.5,
     isAdmin: Math.random() > 0.5,
     createdAt: new Date()

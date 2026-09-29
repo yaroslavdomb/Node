@@ -10,6 +10,10 @@ export function generate4RandomDigits(): number {
   return Math.floor(1000 + Math.random() * 9000);
 }
 
+export function getRandomISRPhone(): string {
+  return `050${Math.floor(1000000 + Math.random() * 9000000)}`;
+}
+
 export function generate4RandomLetters(): string {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   let randomLetters = "";

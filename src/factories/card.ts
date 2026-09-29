@@ -1,4 +1,10 @@
-import { get100Random, get10000Random, generate4RandomDigits, generate4RandomLetters } from "../utils/generators";
+import {
+  get100Random,
+  get10000Random,
+  generate4RandomDigits,
+  generate4RandomLetters,
+  getRandomISRPhone
+} from "../utils/generators";
 import userModel from "../db/models/user";
 import { reserveAndGetBizNumbers } from "../factories/bizNumberCounter";
 import { logger } from "../logs/logger";
@@ -8,7 +14,7 @@ function generateCard(userId: string, grantedUniqueBizNumber: string) {
     title: generate4RandomLetters(),
     subtitle: generate4RandomLetters(),
     description: generate4RandomLetters(),
-    phone: `050${Math.floor(1000000 + Math.random() * 9000000)}`,
+    phone: getRandomISRPhone(),
     email: generate4RandomLetters() + generate4RandomDigits() + ".test@gmail.com",
     web: "http://" + generate4RandomLetters() + ".test.com",
     address: {
