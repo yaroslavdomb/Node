@@ -59,7 +59,7 @@ const startServer = async () => {
 
   const { SERVER_PORT, SCHEMA, SERVER } = envConfig;
   app.listen(SERVER_PORT, () => {
-    logger.info(`Server started on ${SCHEMA}://${SERVER}:${SERVER_PORT}`);
+    logger.info(`Server started on ${SCHEMA}://${SERVER}:${SERVER_PORT} at ${new Date().toLocaleString("en-GB")}`);
     logger.info("**********************************");
     logger.info("Ready for action!");
     logger.info("**********************************");

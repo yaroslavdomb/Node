@@ -17,7 +17,7 @@ const connect = async (
   try {
     await initDB();
   } catch (initError) {
-    logger.error("Error wile init DB with test data:\n", initError);
+    logger.error("Error wile init DB with test data:", initError);
     process.exit(1);
   }
 };
