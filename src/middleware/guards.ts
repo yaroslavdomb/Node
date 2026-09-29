@@ -1,6 +1,7 @@
 import { type RequestHandler } from "express";
 import HttpError from "../errors/http-error";
 import validateToken from "./auth-validation";
+import cardModel from "../db/models/card";
 
 const isAdmin: RequestHandler = (req, res, next) => {
   if (req.user?.isAdmin) {
@@ -18,6 +19,15 @@ const isOwner: RequestHandler = (req, res, next) => {
   return next(new HttpError("Owner privileges required", 403));
 };
 
+const isCardOwner: RequestHandler = async (req, res, next) => {
+  const cardOwnerId = await cardModel.findOne({ _id: req.params.id }, { userId: 1 }).lean<{ userId: string }>();
+  if (String(req.user?._id) === cardOwnerId?.userId) {
+    return next();
+  }
+
+  return next(new HttpError("Card owner privileges required", 403));
+};
+
 const isOwnerOrAdmin: RequestHandler = (req, res, next) => {
   if (req.user?.isAdmin || req.user?._id?.toString() === req.params.id) {
     return next();
@@ -32,5 +42,6 @@ const isBusinessUser: RequestHandler = (req, res, next) => {
 
 export const hasAdminRole: RequestHandler[] = [validateToken, isAdmin];
 export const hasOwnerRole: RequestHandler[] = [validateToken, isOwner];
+export const hasOwnerRoleForCard: RequestHandler[] = [validateToken, isCardOwner];
 export const hasOwnerOrAdminRole: RequestHandler[] = [validateToken, isOwnerOrAdmin];
 export const hasBusinessRole: RequestHandler[] = [validateToken, isBusinessUser];

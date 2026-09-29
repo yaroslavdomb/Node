@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { logger } from "../logs/logger";
 import cardService from "../services/card-service";
-import { hasOwnerRole, hasBusinessRole, hasOwnerOrAdminRole } from "../middleware/guards";
+import { hasOwnerRoleForCard, hasBusinessRole, hasOwnerOrAdminRole } from "../middleware/guards";
 import validateToken from "../middleware/auth-validation";
 import { validateFullCard, validatePartCard } from "../middleware/input-validations";
 
@@ -15,7 +15,7 @@ cardRouter.get("/", async (req, res) => {
 
 cardRouter.get("/my-cards", validateToken, async (req, res) => {
   logger.info("getOwnerCards called");
-  const ownerCards = await cardService.getOwnerCards(req.body.id as string);
+  const ownerCards = await cardService.getOwnerCards(req.user!._id.toString());
   res.json({ list: ownerCards });
 });
 
@@ -31,15 +31,15 @@ cardRouter.post("/", ...hasBusinessRole, async (req, res) => {
   res.json({ createdCard: createdCard });
 });
 
-cardRouter.put("/:id", validateFullCard, ...hasOwnerRole, async (req, res) => {
+cardRouter.put("/:id", validateFullCard, ...hasOwnerRoleForCard, async (req, res) => {
   logger.info("updateCard called");
   const updatedCard = await cardService.updateCard(req.params.id as string, req.body);
   res.json({ updatedCard: updatedCard });
 });
 
-cardRouter.patch("/:id", validatePartCard, validateToken, async (req, res) => {
+cardRouter.patch("/:id", validateToken, async (req, res) => {
   logger.info("changeLikeStatus called");
-  const likedCard = await cardService.changeLikeStatus(req.params.id as string, req.body);
+  const likedCard = await cardService.changeLikeStatus(req.params.id as string, req.user!);
   res.json({ updatedCard: likedCard });
 });
 
