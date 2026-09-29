@@ -27,14 +27,20 @@ const envSchema = z.object({
   SCHEMA: z.enum(["http", "https", "ftp"]).default("http"),
   JWT_SECRET: z.string().min(32, "JWT is mandatory"),
   JWT_VALID_TIME: z.string().default("15min"),
-  TRUST_PROXY: z.coerce.boolean().default(false),
+  TRUST_PROXY: z
+    .enum(["true", "false"])
+    .transform((val) => val === "true")
+    .default(false),
   RATE_LIMIT_WINDOW_MS: z.coerce.number().default(15 * 60 * 1000),
   RATE_LIMIT_MAX_REQUESTS: z.coerce.number().default(200),
   JSON_BODY_LIMIT: z.string().default("2kb"),
   LOGIN_RETRY_LIMIT: z.coerce.number().default(5),
   LOGIN_WINDOW_DURATION: z.coerce.number().default(3600),
   LOGIN_BLOCK_DURATION: z.coerce.number().default(7200),
-  FILE_LOG_ENABLED: z.coerce.boolean().default(true),
+  FILE_LOG_ENABLED: z
+    .enum(["true", "false"])
+    .transform((val) => val === "true")
+    .default(true),
   FILE_LOG_SIZE: z.string().default("10MB"),
   FILE_LOG_PREFIX: z.string().default("nodeProject")
 });
