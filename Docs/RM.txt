@@ -1,9 +1,9 @@
-## Libs/env expected to be used:
+## Technologies & Dependencies:
 	- node
 	- express
 	- cors
 	- mongodb/mongoose
-	- morgan/pino/pino-http
+	- pino/pino-http/pino-pretty/pino-roll
 	- dotenv
 	- jose
 	- bcrypt
@@ -12,69 +12,62 @@
 	
 ## Environment Setup
 
-This project uses environment-specific config files located in `src/config/`, which are **not committed** to the repository.
-An example file (`.env.example`) containing default values is provided instead. `.env.dev`, `.env.test` and `.env.prod` will be created automatically once running `pnpm install`.
+This project uses environment-specific config files (`src/config/.env.dev`, `.env.test`, `.env.prod`), which are **not committed** to the repository.
 
-### 1. Check the config files
+Running `pnpm install` automatically creates these files from `src/config/.env.example`.
 
-After running `pnpm install`, check the `src/config/` folder for `.env.dev`, `.env.test` and `.env.prod` files. If they exist, open them and set your own values (if needed).
-
-### 2. If the files are missing
-
-1) Make sure `src/config/.env.example` exists and run:
-  pnpm run postinstall
-
-2) If the files are still missing:
-  2.1) copy `src/config/.env.example` and rename it to `.env.dev`, `.env.test`, or `.env.prod`, 
-  2.2) fill the file with proper values for each environment.
+### Setup Steps:
+1. Run `pnpm install`.
+2. Check `src/config/` for `.env.dev`, `.env.test`, and `.env.prod`, then adjust their values if needed.
+3. If files are missing, manually run `pnpm run postinstall` or copy `.env.example` into each required `.env.*` file.
 
 ## Defaults and Limitations
 
-1. **Login Rate Limiting**: 5 wrong login attempts per email/IP pair within 1 hour results in a 2-hour ban for that pair.
-  Configured by:
+1. **Login Rate Limiting**: 3 wrong login attempts per email/IP during 1 hour will lead to 24-hour ban for that pair.
+  Configured with:
     - `LOGIN_RETRY_LIMIT`
     - `LOGIN_WINDOW_DURATION`
     - `LOGIN_BLOCK_DURATION`
 
-2. **JWT Expiration**: User Access token (created after login call) is valid for 15 minutes.
-  Configured by:
+2. **JWT Expiration**: User access token (created after login call) is valid for 15 minutes.
+  Configured with:
     - `JWT_VALID_TIME`
 
 3. **Payload Limit**: Maximum JSON body size is 2 KB.
-  Configured by:
+  Configured with:
     - `JSON_BODY_LIMIT`
 
 4. **Global Rate Limiting**: 200 requests per 15 minutes per IP.
-  Configured by:
+  Configured with:
     - `RATE_LIMIT_WINDOW_MS`
     - `RATE_LIMIT_MAX_REQUESTS`
 
-5. **Ports**: 8050 - server, 27017 - Mongo DB
-  Configured by:
+5. **Ports**: 8050 - server, 27017 - MongoDB
+  Configured with:
     - `SERVER_PORT`
     - `DB_PORT`
 
 6. **Data base name**: Nodejs_final_project
-  Configured by:
+  Configured with:
     - `DB_NAME`
 
-7. **Testing data**: create DB, 3 users and up to 15 cards per each.
-  Configured by:
-    - `DB_INIT_USERS` = number of users to be generated. 
-        User will have email in form ABC, where: 
-          A = 4 letters(presenting of capital/nonCapitral granted) 
-          B = 4 digits 
-          C = postfix "@test.com"
-        User password will be in form ABD, where:
-          A = 4 letters(presenting of capital/nonCapitral granted)
-          B = 4 digits
-          D = "!"
-    - `DB_INIT_CARDS` = number of cards to be generated. 
-        Cards will be spread between the existing users. Put attention - not between just generated users, but all of the users existing currently in DB! 
+7. **Test Data Seeding**: Populates the DB with users and cards.
+   Configured with:
+   - `DB_INIT_USERS`: Number of users to be generated. 
+      The same letters & digits are used for email/password to simplify testing:
+      - **Email**: 4 letters + 4 digits + `@test.com`.
+      - **Password**: 4 letters + 4 digits + `!`.
+   - `DB_INIT_CARDS`: Number of cards to be generated. Randomly distributed across all existing business users in the DB.
+
+8. **Logging into file**: there is an option to log server actions into the file (up to 10mb), rolled at midnight. 
+  Configured by default with:
+    - `FILE_LOG_ENABLED`
+    - `FILE_LOG_SIZE`
+    - `FILE_LOG_PREFIX`
 
 ## DB structure 
 
-1) **DB name** = "Node_final_project"
+1) **DB name** = "Nodejs_final_project"
 
 2) **Collections**
   - cards

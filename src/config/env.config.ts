@@ -34,7 +34,9 @@ const envSchema = z.object({
   LOGIN_RETRY_LIMIT: z.coerce.number().default(5),
   LOGIN_WINDOW_DURATION: z.coerce.number().default(3600),
   LOGIN_BLOCK_DURATION: z.coerce.number().default(7200),
-  FILE_LOG_ENABLED: z.coerce.boolean().default(true)
+  FILE_LOG_ENABLED: z.coerce.boolean().default(true),
+  FILE_LOG_SIZE: z.string().default("10mb"),
+  FILE_LOG_PREFIX: z.string().default("nodeProject")
 });
 
 const result = envSchema.safeParse(process.env);
