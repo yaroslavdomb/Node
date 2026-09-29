@@ -58,6 +58,8 @@ const startServer = async () => {
   await dbConnection();
 
   const { SERVER_PORT, SCHEMA, SERVER } = envConfig;
+
+  //Printing time will help to easelly find the start in file log
   app.listen(SERVER_PORT, () => {
     logger.info(`Server started on ${SCHEMA}://${SERVER}:${SERVER_PORT} at ${new Date().toLocaleString("en-GB")}`);
     logger.info("**********************************");
