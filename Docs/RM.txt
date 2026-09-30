@@ -8,7 +8,6 @@
 	- jose
 	- bcrypt
 	- zod
-	- nodemon
 	
 ## Environment Setup
 
@@ -51,13 +50,15 @@ Running `pnpm install` automatically creates these files from `src/config/.env.e
   Configured with:
     - `DB_NAME`
 
-7. **Test Data Seeding**: Populates the DB with users and cards.
+7. **Testing Data**: Number of ussers and cards could be generated for testing purpose.
    Configured with:
    - `DB_INIT_USERS`: Number of users to be generated. 
-      The same letters & digits are used for email/password to simplify testing:
-      - **Email**: 4 letters + 4 digits + `@test.com`.
-      - **Password**: 4 letters + 4 digits + `!`.
-   - `DB_INIT_CARDS`: Number of cards to be generated. Randomly distributed across all existing business users in the DB.
+   - `DB_INIT_CARDS`: Number of cards to be generated. Randomly distributed across all the existing business users in the DB.
+
+  ***TESTING DATA CREDENTIALS***:
+  The same letters & digits are used for email/password to simplify testing:
+    - **Email** has a form: 4 letters + 4 digits + `@test.com`.
+    - **Password** has a form: 4 letters + 4 digits + `!`.
 
 8. **Logging into file**: there is an option to log server actions into the file (up to 10mb), rolled at midnight. 
   Configured by default with:
@@ -74,6 +75,6 @@ Running `pnpm install` automatically creates these files from `src/config/.env.e
 2) **Collections**
   - cards
   - users
-  - biz_number_counter = keep the auto-incremented counter of biz_number for cards collection to grant its   uniquiness. Starts from 0 for just created DB.
+  - biz_number_counter = keep the auto-incremented counter of biz_number for cards collection to grant its uniquiness. Starts from 0 for just created DB, otherwise will keep the already existing max number.
 
 
