@@ -12,7 +12,7 @@ function getConnString(): string {
     : `mongodb://${envConfig.DB_HOST}:${envConfig.DB_PORT}/${envConfig.DB_NAME}`;
 }
 
-//Resolve DNS to get srv records for MongoDB, see issue below
+//Resolve DNS to get srv records for MongoDB, see comment for IPv6 below
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
 /*
