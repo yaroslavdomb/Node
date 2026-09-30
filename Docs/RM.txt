@@ -52,6 +52,7 @@ Running `pnpm install` automatically creates these files from `src/config/.env.e
 
 7. **Testing Data**: Number of ussers and cards could be generated for testing purpose.
    Configured with:
+   - `DB_INIT_TEST_DATA`: Generate or not test data
    - `DB_INIT_USERS`: Number of users to be generated. 
    - `DB_INIT_CARDS`: Number of cards to be generated. Randomly distributed across all the existing business users in the DB.
 

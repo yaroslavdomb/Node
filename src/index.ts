@@ -8,6 +8,7 @@ import rateLimit from "express-rate-limit";
 
 import { logger } from "./logs/logger";
 import dbConnection from "./db/connection";
+import { populateDB } from "./db/populate-db";
 import usersRouter from "./routers/users";
 import cardsRouter from "./routers/cards";
 import notFound from "./middleware/notFound";

@@ -1,6 +1,6 @@
 import envConfig from "../config/env.config";
 import mongoose from "mongoose";
-import initDB from "./initializing";
+import { populateDB } from "./populate-db";
 import { logger } from "../logs/logger";
 
 function getConnString(): string {
@@ -14,17 +14,18 @@ function getConnString(): string {
 const connect = async (connStr: string = getConnString()) => {
   try {
     await mongoose.connect(connStr);
+    logger.info(`Connected to DB: ${connStr}`);
   } catch (connError) {
     logger.error(`Failed to connect to ${connStr}:`, connError);
     process.exit(1);
   }
-  logger.info(`Connected to DB: ${connStr}`);
 
-  try {
-    await initDB();
-  } catch (initError) {
-    logger.error(`Error wile init DB with test data: ${initError.message}`);
-    process.exit(1);
+  if (envConfig.DB_INIT_TEST_DATA) {
+    try {
+      await populateDB();
+    } catch (err) {
+      logger.error(`Failed to populate DB:`, err);
+    }
   }
 };
 

@@ -20,6 +20,10 @@ const envSchema = z.object({
   DB_PORT: z.coerce.number().min(1000).max(65535),
   DB_URI: z.string().default(""),
   DB_NAME: z.string().min(1, "DB_NAME is mandatory field"),
+  DB_INIT_TEST_DATA: z
+    .enum(["true", "false"])
+    .transform((val) => val === "true")
+    .default(false),
   DB_INIT_USERS: z.coerce.number().min(0).default(3),
   DB_INIT_CARDS: z.coerce.number().min(0).default(15),
   SERVER_PORT: z.coerce.number().min(1000).max(65535),
