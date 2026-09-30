@@ -2,10 +2,10 @@ import { z } from "zod";
 import dotenv from "dotenv";
 import path from "node:path";
 
-const envTypeSchema = z.enum(["prod", "test", "dev"]).default("dev");
+const envTypeSchema = z.enum(["local", "cloud"]).default("local");
 const envType = envTypeSchema.safeParse(process.env.ENV_TYPE);
 if (!envType.success) {
-  console.error(`Wrong ENV_TYPE provided: "${process.env.ENV_TYPE}". Proper values are "prod/test/dev".`);
+  console.error(`Wrong ENV_TYPE provided: "${process.env.ENV_TYPE}". Proper values are "local/cloud".`);
   process.exit(1);
 }
 

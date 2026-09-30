@@ -5,7 +5,7 @@ import { logger } from "../logs/logger.js";
 import dns from "dns";
 
 function getConnString(): string {
-  return envConfig.ENV_TYPE === "prod"
+  return envConfig.ENV_TYPE === "cloud"
     ? envConfig.DB_URI.endsWith("/")
       ? `${envConfig.DB_URI}${envConfig.DB_NAME}`
       : `${envConfig.DB_URI}/${envConfig.DB_NAME}`

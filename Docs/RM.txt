@@ -1,24 +1,21 @@
-## Technologies & Dependencies:
-	- node
-	- express
-	- cors
-	- mongodb/mongoose
-	- pino/pino-http/pino-pretty/pino-roll
-	- dotenv
-	- jose
-	- bcrypt
-	- zod
-	
 ## Environment Setup
 
-This project uses environment-specific config files (`src/config/.env.dev`, `.env.test`, `.env.prod`), which are **not committed** to the repository.
+This project uses environment-specific config files (`src/config/.env.local`, `.env.cloud`), which are **not committed** to the repository.
 
 Running `pnpm install` automatically creates these files from `src/config/.env.example`.
 
 ### Setup Steps:
 1. Run `pnpm install`.
-2. Check `src/config/` for `.env.dev`, `.env.test`, and `.env.prod`, then adjust their values if needed.
+2. Check `src/config/` for `.env.local` and `.env.cloud`, then adjust their values if needed. At least 2 keys hold secret values so you have to provide them: 
+  - `JWT_SECRET` = at least 32 char values for JWT generation (required in all env files).
+  - `DB_URI` = URI for MongoDB cloud connection (required only in `.env.cloud`).
 3. If files are missing, manually run `pnpm run postinstall` or copy `.env.example` into each required `.env.*` file.
+
+## Start options
+1. pnpm run dev = work with local Mongo DB (27017) with watch
+2. pnpm run dev_debug = work with local Mongo DB (27017) with watch and enabled debug mode
+3. pnpm run local = work with local Mongo DB (27017)
+3. pnpm run cloud = work with cloud Mongo DB. Connection string need to be provided in DB_URI (see ./config/env.example) 
 
 ## Defaults and Limitations
 
@@ -77,6 +74,15 @@ Running `pnpm install` automatically creates these files from `src/config/.env.e
 2) **Collections**
   - cards
   - users
-  - biz_number_counter = keep the auto-incremented counter of biz_number for cards collection to grant its uniquiness. Starts from 0 for just created DB, otherwise will keep the already existing max number.
+  - biz_number_counter = keep the auto-incremented counter of biz_number for cards collection to grant its uniqueness. Starts from 0 for just created DB, otherwise will keep the already existing max number.
 
-
+## Technologies & Dependencies:
+	- node
+	- express
+	- cors
+	- mongodb/mongoose
+	- pino/pino-http/pino-pretty/pino-roll
+	- dotenv
+	- jose
+	- bcrypt
+	- zod

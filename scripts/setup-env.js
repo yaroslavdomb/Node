@@ -1,6 +1,6 @@
 import fs from "node:fs";
 
-const envs = ["dev", "test", "prod"];
+const envs = ["local", "cloud"];
 const examplePath = "src/config/.env.example";
 
 envs.forEach((env) => {
