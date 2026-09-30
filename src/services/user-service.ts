@@ -40,7 +40,9 @@ const userService = {
       processFailedLogin(ip, loginAttempts);
     }
 
-    const detectedUser = await userModel.findOne({ email }).select({ password: 1, _id: 1, email: 1, isAdmin: 1 });
+    const detectedUser = await userModel
+      .findOne({ email })
+      .select({ password: 1, _id: 1, email: 1, isAdmin: 1, isBusiness: 1 });
     const isPassValid = detectedUser ? await authService.validatePassword(password, detectedUser.password) : false;
 
     if (!detectedUser || !isPassValid) {
@@ -54,7 +56,12 @@ const userService = {
     }
 
     await loginLimiter.delete(key);
-    return authService.generateJWT({ email: detectedUser.email, admin: detectedUser.isAdmin });
+    return authService.generateJWT({
+      email: detectedUser.email,
+      isAdmin: detectedUser.isAdmin,
+      isBusiness: detectedUser.isAdmin,
+      _id: detectedUser._id.toString()
+    });
   },
 
   getListOfUsers: async () => {

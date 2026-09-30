@@ -3,6 +3,8 @@ import "jose";
 declare module "jose" {
   interface JWTPayload {
     email: string;
-    admin: boolean;
+    isAdmin: boolean;
+    isBusiness: boolean;
+    _id: string;
   }
 }

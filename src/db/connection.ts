@@ -3,9 +3,15 @@ import mongoose from "mongoose";
 import initDB from "./initializing";
 import { logger } from "../logs/logger";
 
-const connect = async (
-  connStr: string = `mongodb://${envConfig.DB_HOST}:${envConfig.DB_PORT}/${envConfig.DB_NAME}`
-) => {
+function getConnString(): string {
+  return envConfig.ENV_TYPE === "prod"
+    ? envConfig.DB_URI.endsWith("/")
+      ? `${envConfig.DB_URI}${envConfig.DB_NAME}`
+      : `${envConfig.DB_URI}/${envConfig.DB_NAME}`
+    : `mongodb://${envConfig.DB_HOST}:${envConfig.DB_PORT}/${envConfig.DB_NAME}`;
+}
+
+const connect = async (connStr: string = getConnString()) => {
   try {
     await mongoose.connect(connStr);
   } catch (connError) {
