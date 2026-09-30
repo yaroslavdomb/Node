@@ -4,7 +4,7 @@ This project uses environment-specific config files (`src/config/.env.local`, `.
 
 Running `pnpm install` automatically creates these files from `src/config/.env.example`.
 
-### Setup Steps:
+#### Setup Steps:
 1. Run `pnpm install`.
 2. Check `src/config/` for `.env.local` and `.env.cloud`, then adjust their values if needed. At least 2 keys hold secret values so you have to provide them: 
   - `JWT_SECRET` = at least 32 char values for JWT generation (required in all env files).
@@ -19,47 +19,47 @@ Running `pnpm install` automatically creates these files from `src/config/.env.e
 
 ## Defaults and Limitations
 
-1. **Login Rate Limiting**: 3 wrong login attempts per email/IP during 1 hour will lead to 24-hour ban for that pair.
+1. **Login Rate Limiting**: 3 wrong login attempts per email/IP during 1 hour will lead to 24-hour ban for that pair.  
   Configured with:
     - `LOGIN_RETRY_LIMIT`
     - `LOGIN_WINDOW_DURATION`
     - `LOGIN_BLOCK_DURATION`
 
-2. **JWT Expiration**: User access token (created after login call) is valid for 15 minutes.
+2. **JWT Expiration**: User access token (created after login call) is valid for 15 minutes.  
   Configured with:
     - `JWT_VALID_TIME`
 
-3. **Payload Limit**: Maximum JSON body size is 2 KB.
+3. **Payload Limit**: Maximum JSON body size is 2 KB.  
   Configured with:
     - `JSON_BODY_LIMIT`
 
-4. **Global Rate Limiting**: 200 requests per 15 minutes per IP.
+4. **Global Rate Limiting**: 200 requests per 15 minutes per IP.  
   Configured with:
     - `RATE_LIMIT_WINDOW_MS`
     - `RATE_LIMIT_MAX_REQUESTS`
 
-5. **Ports**: 8050 - server, 27017 - MongoDB
+5. **Ports**: 8050 - server, 27017 - MongoDB.  
   Configured with:
     - `SERVER_PORT`
     - `DB_PORT`
 
-6. **Data base name**: Nodejs_final_project
+6. **Data base name**: Nodejs_final_project.  
   Configured with:
     - `DB_NAME`
 
-7. **Testing Data**: Number of users and cards could be generated for testing purpose.
+7. **Testing Data**: Number of users and cards could be generated for testing purpose.  
    Configured with:
    - `DB_INIT_TEST_DATA`: Generate test data on server startup.
    > **NB:** DB population with test data during server startup is an anti-pattern. In the real world it should be isolated into a standalone CLI task/script and run by admin only.
    - `DB_INIT_USERS`: Number of users to be generated. 
    - `DB_INIT_CARDS`: Number of cards to be generated. Randomly distributed between all the existing business users in the DB.
 
-  ***TESTING DATA CREDENTIALS***:
-  The same letters & digits are used for email/password to simplify testing:
-    - **Email** has a form: 4 letters + 4 digits + `@test.com`.
+  > **TESTING DATA CREDENTIALS**:
+  The same letters & digits are used for email/password to simplify testing:  
+    - **Email** has a form: 4 letters + 4 digits + `@test.com`.  
     - **Password** has a form: 4 letters + 4 digits + `!`.
 
-8. **Logging into file**: there is an option to log server actions into the file (up to 10mb), rolled at midnight. 
+8. **Logging into file**: there is an option to log server actions into the file (up to 10mb), rolled at midnight.  
   Configured by default with:
     - `FILE_LOG_ENABLED`
     - `FILE_LOG_SIZE`
@@ -71,10 +71,10 @@ Running `pnpm install` automatically creates these files from `src/config/.env.e
 
 1) **DB name** = "Nodejs_final_project"
 
-2) **Collections**
-  - cards
-  - users
-  - biz_number_counter = keep the auto-incremented counter of biz_number for cards collection to grant its uniqueness. Starts from 0 for just created DB, otherwise will keep the already existing max number.
+2) **Collections**:
+    - cards
+    - users
+    - biz_number_counter = keep the auto-incremented counter of biz_number for cards collection to grant its uniqueness. Starts from 0 for just created DB, otherwise will keep the already existing max number.
 
 ## Technologies & Dependencies:
 	- node
