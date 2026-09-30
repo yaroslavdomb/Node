@@ -64,6 +64,8 @@ Running `pnpm install` automatically creates these files from `src/config/.env.e
     - `FILE_LOG_ENABLED`
     - `FILE_LOG_SIZE`
     - `FILE_LOG_PREFIX`
+    - `FILE_LOG_DATA_NAMING_FORMAT`
+    - `FILE_LOG_MAX_NUMBER`
 
 ## DB structure 
 

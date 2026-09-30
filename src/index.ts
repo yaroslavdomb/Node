@@ -61,7 +61,8 @@ const startServer = async () => {
 
   //Printing time will help to easelly find the start in file log
   app.listen(SERVER_PORT, () => {
-    logger.info(`Server started on ${SCHEMA}://${SERVER}:${SERVER_PORT} at ${new Date().toLocaleString("en-GB")}`);
+    logger.info(`Server time ___ ${new Date().toLocaleString("en-GB")} ___`);
+    logger.info(`Server started on ${SCHEMA}://${SERVER}:${SERVER_PORT}`);
     logger.info("**********************************");
     logger.info("Ready for action!");
     logger.info("**********************************");

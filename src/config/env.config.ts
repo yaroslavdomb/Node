@@ -43,7 +43,9 @@ const envSchema = z.object({
     .transform((val) => val === "true")
     .default(true),
   FILE_LOG_SIZE: z.string().default("10MB"),
-  FILE_LOG_PREFIX: z.string().default("nodeProject")
+  FILE_LOG_PREFIX: z.string().default("nodeProject"),
+  FILE_LOG_DATA_NAMING_FORMAT: z.string().default("dd-MM-yyyy"),
+  FILE_LOG_MAX_NUMBER: z.coerce.number().min(1).default(10)
 });
 
 const result = envSchema.safeParse(process.env);
