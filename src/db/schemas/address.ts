@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { Address } from "../../validators/address";
+import { Address } from "../../validators/address.js";
 
 export const addressDBSchema = new Schema<Address>({
   city: {

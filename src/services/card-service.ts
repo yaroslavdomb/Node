@@ -1,8 +1,8 @@
-import cardModel from "../db/models/card";
-import HttpError from "../errors/http-error";
-import { Card as CardRequest } from "../validators/card";
-import { userDB } from "../db/schemas/user";
-import { reserveAndGetBizNumbers } from "../factories/bizNumberCounter";
+import cardModel from "../db/models/card.js";
+import HttpError from "../errors/http-error.js";
+import { Card as CardRequest } from "../validators/card.js";
+import { userDB } from "../db/schemas/user.js";
+import { reserveAndGetBizNumbers } from "../factories/bizNumberCounter.js";
 
 const cardService = {
   getListOfAllCards: async () => {

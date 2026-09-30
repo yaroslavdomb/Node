@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { inName } from "../../validators/name";
+import { inName } from "../../validators/name.js";
 
 export const nameDBSchema = new Schema<inName>({
   first: {

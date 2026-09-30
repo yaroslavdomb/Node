@@ -1,7 +1,8 @@
-import envConfig from "../config/env.config";
+import envConfig from "../config/env.config.js";
 import mongoose from "mongoose";
-import { populateDB } from "./populate-db";
-import { logger } from "../logs/logger";
+import { populateDB } from "./populate-db.js";
+import { logger } from "../logs/logger.js";
+import dns from "dns";
 
 function getConnString(): string {
   return envConfig.ENV_TYPE === "prod"
@@ -11,12 +12,19 @@ function getConnString(): string {
     : `mongodb://${envConfig.DB_HOST}:${envConfig.DB_PORT}/${envConfig.DB_NAME}`;
 }
 
+//Resolve DNS to get srv records for MongoDB, see issue below
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
+
+/*
+ * Off response from Mongo team, April 2024:
+ * Atlas does not support connectivity via IPv6 addresses at this time.
+ */
 const connect = async (connStr: string = getConnString()) => {
   try {
-    await mongoose.connect(connStr);
+    await mongoose.connect(connStr, { family: 4 });
     logger.info(`Connected to DB: ${connStr}`);
   } catch (connError) {
-    logger.error(`Failed to connect to ${connStr}:`, connError);
+    logger.error(`Failed to connect to ${connStr}:` + connError);
     process.exit(1);
   }
 

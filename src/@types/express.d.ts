@@ -1,4 +1,4 @@
-import { userDB } from "../db/schemas/user";
+import { userDB } from "../db/schemas/user.js";
 import { Request } from "express";
 
 declare global {

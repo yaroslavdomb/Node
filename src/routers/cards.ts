@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { logger } from "../logs/logger";
-import cardService from "../services/card-service";
-import { hasOwnerRoleForCard, hasBusinessRole, hasOwnerOrAdminRole } from "../middleware/guards";
-import validateToken from "../middleware/auth-validation";
-import { validateFullCard, validatePartCard } from "../middleware/input-validations";
+import { logger } from "../logs/logger.js";
+import cardService from "../services/card-service.js";
+import { hasOwnerRoleForCard, hasBusinessRole, hasOwnerOrAdminRole } from "../middleware/guards.js";
+import validateToken from "../middleware/auth-validation.js";
+import { validateFullCard } from "../middleware/input-validations.js";
 
 const cardRouter = Router();
 

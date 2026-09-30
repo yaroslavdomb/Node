@@ -1,4 +1,4 @@
-import { user } from "./user";
+import { user } from "./user.js";
 import { z } from "zod";
 
 export const login = user.pick({

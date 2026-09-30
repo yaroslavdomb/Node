@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import { userDBSchema } from "../schemas/user";
-import authService from "../../services/auth-service";
-import { IUserDoc, IUserModel } from "../schemas/user";
+import { userDBSchema } from "../schemas/user.js";
+import authService from "../../services/auth-service.js";
+import { IUserDoc, IUserModel } from "../schemas/user.js";
 
 //Using methods means works on documents in Mongo, so this related to the document
 userDBSchema.methods.setPassword = async function (password: string) {

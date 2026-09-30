@@ -1,9 +1,9 @@
-import envConfig from "../config/env.config";
-import userModel from "./models/user";
-import cardModel from "./models/card";
-import { generateUsersList } from "../factories/user";
-import { generateCardsList } from "../factories/card";
-import { logger } from "../logs/logger";
+import envConfig from "../config/env.config.js";
+import userModel from "./models/user.js";
+import cardModel from "./models/card.js";
+import { generateUsersList } from "../factories/user.js";
+import { generateCardsList } from "../factories/card.js";
+import { logger } from "../logs/logger.js";
 
 /**
  * Pay attention - the function use already opened global connection to DB

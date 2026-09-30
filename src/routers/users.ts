@@ -1,8 +1,8 @@
 import { Router } from "express";
-import userService from "../services/user-service";
-import { validateLoginSchema, validateFullUser, validatePartUser } from "../middleware/input-validations";
-import { hasAdminRole, hasOwnerRole, hasOwnerOrAdminRole } from "../middleware/guards";
-import { logger } from "../logs/logger";
+import userService from "../services/user-service.js";
+import { validateLoginSchema, validateFullUser, validatePartUser } from "../middleware/input-validations.js";
+import { hasAdminRole, hasOwnerRole, hasOwnerOrAdminRole } from "../middleware/guards.js";
+import { logger } from "../logs/logger.js";
 
 const usersRouter = Router();
 

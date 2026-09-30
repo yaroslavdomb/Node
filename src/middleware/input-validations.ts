@@ -1,8 +1,8 @@
 import { RequestHandler } from "express";
 import { ZodType } from "zod";
-import { user } from "../validators/user";
-import { card } from "../validators/card";
-import { login } from "../validators/login";
+import { user } from "../validators/user.js";
+import { card } from "../validators/card.js";
+import { login } from "../validators/login.js";
 
 export function validateSchema<T>(schema: ZodType<T>): RequestHandler<any, any, T> {
   return async (req, res, next) => {

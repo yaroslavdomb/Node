@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { Image } from "../../validators/image";
+import { Image } from "../../validators/image.js";
 
 export const imageDBSchema = new Schema<Image>({
   url: {

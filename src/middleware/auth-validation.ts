@@ -1,7 +1,7 @@
 import { Request, RequestHandler } from "express";
-import HttpError from "../errors/http-error";
-import authService from "../services/auth-service";
-import userModel from "../db/models/user";
+import HttpError from "../errors/http-error.js";
+import authService from "../services/auth-service.js";
+import userModel from "../db/models/user.js";
 
 const extractToken = (req: Request): string => {
   const authToken = req.header("Authorization");

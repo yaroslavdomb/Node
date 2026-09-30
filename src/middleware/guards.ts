@@ -1,7 +1,7 @@
 import { type RequestHandler } from "express";
-import HttpError from "../errors/http-error";
-import validateToken from "./auth-validation";
-import cardModel from "../db/models/card";
+import HttpError from "../errors/http-error.js";
+import validateToken from "./auth-validation.js";
+import cardModel from "../db/models/card.js";
 
 const isAdmin: RequestHandler = (req, res, next) => {
   if (req.user?.isAdmin) {

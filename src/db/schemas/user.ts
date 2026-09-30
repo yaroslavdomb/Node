@@ -1,8 +1,8 @@
 import { Schema, Types, Document, Model } from "mongoose";
-import { addressDBSchema } from "./address";
-import { nameDBSchema } from "./name";
-import { imageDBSchema } from "./image";
-import { User } from "../../validators/user";
+import { addressDBSchema } from "./address.js";
+import { nameDBSchema } from "./name.js";
+import { imageDBSchema } from "./image.js";
+import { User } from "../../validators/user.js";
 
 export type userDB = User & {
   createdAt: Date;

@@ -1,8 +1,8 @@
 import { ErrorRequestHandler } from "express";
 import { MongoNetworkError, MongoServerError, MongoServerSelectionError } from "mongodb";
 import { ZodError } from "zod";
-import env from "../config/env.config";
-import HttpError from "../errors/http-error";
+import env from "../config/env.config.js";
+import HttpError from "../errors/http-error.js";
 
 const jwtValidationErrors = ["JOSEError", "JWKInvalid", "JWEInvalid"];
 

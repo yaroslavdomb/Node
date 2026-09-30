@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { SignJWT, JWTPayload, jwtVerify } from "jose";
-import envConfig from "../config/env.config";
+import envConfig from "../config/env.config.js";
 
 const authService = {
   hashPassword: (plainPassword: string, rounds: number = 12) => {

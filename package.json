@@ -7,7 +7,7 @@
     "build": "tsc",
     "dev": "cross-env ENV_TYPE=dev dotenvx run -f src/config/.env.dev -- tsx watch -- src/index.ts",
     "dev_debug": "cross-env ENV_TYPE=dev dotenvx run -f src/config/.env.dev -- tsx watch --inspect -- src/index.ts",
-    "prod": "cross-env ENV_TYPE=prod dotenvx run -f src/config/.env.prod -- node buildedProj/index.js",
+    "prod": "pnpm build && cross-env ENV_TYPE=prod dotenvx run -f src/config/.env.prod -- node buildedProj/index.js",
     "postinstall": "node scripts/setup-env.js"
   },
   "keywords": [],

@@ -1,18 +1,17 @@
-import envConfig from "./config/env.config";
+import envConfig from "./config/env.config.js";
 
 import express from "express";
 import path from "node:path";
 import cors from "cors";
-import pinoHttp from "pino-http";
+import { pinoHttp } from "pino-http";
 import rateLimit from "express-rate-limit";
 
-import { logger } from "./logs/logger";
-import dbConnection from "./db/connection";
-import { populateDB } from "./db/populate-db";
-import usersRouter from "./routers/users";
-import cardsRouter from "./routers/cards";
-import notFound from "./middleware/notFound";
-import errorHandler from "./middleware/error-handler";
+import { logger } from "./logs/logger.js";
+import dbConnection from "./db/connection.js";
+import usersRouter from "./routers/users.js";
+import cardsRouter from "./routers/cards.js";
+import notFound from "./middleware/notFound.js";
+import errorHandler from "./middleware/error-handler.js";
 
 //Initial configurations for server
 const app = express();

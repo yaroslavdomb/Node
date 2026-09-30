@@ -4,8 +4,8 @@ import {
   generate4RandomDigits,
   generate4RandomLetters,
   getRandomISRPhone
-} from "../utils/generators";
-import authService from "../services/auth-service";
+} from "../utils/generators.js";
+import authService from "../services/auth-service.js";
 
 function generateUser(digits: number, letters: string, password: string) {
   return {

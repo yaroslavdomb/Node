@@ -1,5 +1,5 @@
 import { RateLimiterMemory } from "rate-limiter-flexible";
-import envConfig from "../config/env.config";
+import envConfig from "../config/env.config.js";
 
 export const loginLimiter = new RateLimiterMemory({
   points: envConfig.LOGIN_RETRY_LIMIT,

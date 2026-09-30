@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { address } from "./address";
-import { name } from "./name";
-import { PASS_REGEXP, ISRAEL_PHONE_REGEXP } from "./patterns";
-import { image } from "./image";
+import { address } from "./address.js";
+import { name } from "./name.js";
+import { PASS_REGEXP, ISRAEL_PHONE_REGEXP } from "./patterns.js";
+import { image } from "./image.js";
 
 export const user = z.object({
   address: address,

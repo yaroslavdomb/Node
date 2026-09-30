@@ -4,10 +4,10 @@ import {
   generate4RandomDigits,
   generate4RandomLetters,
   getRandomISRPhone
-} from "../utils/generators";
-import userModel from "../db/models/user";
-import { reserveAndGetBizNumbers } from "../factories/bizNumberCounter";
-import { logger } from "../logs/logger";
+} from "../utils/generators.js";
+import userModel from "../db/models/user.js";
+import { reserveAndGetBizNumbers } from "../factories/bizNumberCounter.js";
+import { logger } from "../logs/logger.js";
 
 function generateCard(userId: string, grantedUniqueBizNumber: string) {
   return {

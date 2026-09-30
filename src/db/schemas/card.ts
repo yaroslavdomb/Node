@@ -1,7 +1,7 @@
 import { Schema, Types } from "mongoose";
-import { addressDBSchema } from "./address";
-import { imageDBSchema } from "./image";
-import { Card } from "../../validators/card";
+import { addressDBSchema } from "./address.js";
+import { imageDBSchema } from "./image.js";
+import { Card } from "../../validators/card.js";
 
 export type cardDB = Card & {
   userId: string;

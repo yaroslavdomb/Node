@@ -1,11 +1,10 @@
-import { User as UserRequest } from "../validators/user";
-import userModel from "../db/models/user";
-import HttpError from "../errors/http-error";
-import authService from "./auth-service";
-import { error } from "node:console";
-import { logger } from "../logs/logger";
-import { loginLimiter } from "../middleware/login-limiter";
-import envConfig from "../config/env.config";
+import { User as UserRequest } from "../validators/user.js";
+import userModel from "../db/models/user.js";
+import HttpError from "../errors/http-error.js";
+import authService from "./auth-service.js";
+import { logger } from "../logs/logger.js";
+import { loginLimiter } from "../middleware/login-limiter.js";
+import envConfig from "../config/env.config.js";
 
 function processFailedLogin(ip: string, attempts: any): void {
   const retrySecs = attempts.msBeforeNext / 1000 + 1;

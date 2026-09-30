@@ -1,4 +1,4 @@
-import { BizNumberCounterModel } from "../db/models/bizNumberCounter";
+import { BizNumberCounterModel } from "../db/models/bizNumberCounter.js";
 
 /*
  * wantToReserve = Argument, how many numbers to reserve

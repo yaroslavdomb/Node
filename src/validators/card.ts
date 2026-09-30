@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { ISRAEL_PHONE_REGEXP } from "./patterns";
-import { address } from "./address";
-import { image } from "./image";
+import { ISRAEL_PHONE_REGEXP } from "./patterns.js";
+import { address } from "./address.js";
+import { image } from "./image.js";
 
 export const card = z.object({
   title: z.string().min(2).max(100),
